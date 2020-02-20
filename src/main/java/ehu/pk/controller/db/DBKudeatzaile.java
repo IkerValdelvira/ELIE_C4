@@ -1,29 +1,23 @@
-package ehu.isad.controller.db;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.io.File;
-import java.sql.Connection;
-import java.sql.Statement;
+package ehu.pk.controller.db;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.*;
+import java.util.Properties;
 
 
 public class DBKudeatzaile {
 
 	Connection conn = null;
 
-	private void conOpen() {
+	private void conOpen(String dbpath) {
 		try {
+			String url = "jdbc:sqlite:"+ dbpath ;
+			conn = DriverManager.getConnection(url);
 
-			//String path=this.getClass().getResource("/eurobisioa.db").getPath();
-			// System.out.println("Path:"+ path);
-			String url = "jdbc:sqlite::resource:eurobisioa.db";
-			Class.forName("org.sqlite.JDBC").newInstance();
-
-			conn = (Connection) DriverManager.getConnection(url);
 			System.out.println("Database connection established");
 		} catch (Exception e) {
-			System.err.println("Cannot connect to database server");
+			System.err.println("Cannot connect to database server " + e);
 		}
 	}
 
@@ -59,8 +53,25 @@ public class DBKudeatzaile {
 	// singleton patroia
 	private static DBKudeatzaile instantzia = new DBKudeatzaile();
 
-	private DBKudeatzaile() {
-		this.conOpen();
+	private DBKudeatzaile()  {
+
+		Properties properties = null;
+		InputStream in = null;
+
+		try {
+			in = this.getClass().getResourceAsStream("/setup.properties");
+			properties = new Properties();
+			properties.load(in);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		this.conOpen(properties.getProperty("dbpath"));
 
 	}
 

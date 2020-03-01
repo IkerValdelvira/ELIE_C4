@@ -24,7 +24,7 @@ public class Main extends Application {
     pantailakKargatu();
 
     stage.setTitle("Conecta 4");
-    stage.setScene(new Scene(mainUI, 700, 500));
+    stage.setScene(new Scene(mainUI, 700, 540));
     stage.show();
     stage.setResizable(false);
   }

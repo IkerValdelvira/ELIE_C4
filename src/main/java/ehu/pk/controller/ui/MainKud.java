@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -17,6 +18,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class MainKud implements Initializable {
@@ -27,7 +29,31 @@ public class MainKud implements Initializable {
     private GridPane tableroa;
 
     @FXML
-    private ImageView im00;
+    private Button btnZut0;
+
+    @FXML
+    private Button btnZut1;
+
+    @FXML
+    private Button btnZut2;
+
+    @FXML
+    private Button btnZut3;
+
+    @FXML
+    private Button btnZut4;
+
+    @FXML
+    private Button btnZut5;
+
+    @FXML
+    private Button btnZut6;
+
+    @FXML
+    private Button btnZut7;
+
+    @FXML
+    private Button btnZut8;
 
     private static final int LAUKI_TAMAINA = 80;
     private static final int ZUTABEAK = 9;
@@ -50,8 +76,8 @@ public class MainKud implements Initializable {
         tableroa.setFill(Color.BLUE);
         tableroaPane.getChildren().add(tableroa);*/
 
-        for(int i=0; i<tableroa.getRowCount(); i++){
-            for(int j=0; j<tableroa.getColumnCount(); j++){
+        for(int i=1; i<tableroa.getRowCount(); i++){
+            for (int j = 0; j < tableroa.getColumnCount(); j++) {
                 Image image = new Image("FitxaZuria.png");
                 ImageView imageView = new ImageView(image);
                 imageView.setFitHeight(80);

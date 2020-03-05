@@ -6,25 +6,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
+import javafx.scene.paint.Stop;
 
-import javax.xml.transform.sax.SAXSource;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class MainKud implements Initializable {
@@ -62,13 +50,13 @@ public class MainKud implements Initializable {
     private Button btnZut8;
 
     private String[][] tableroa;
-    private int turnoa;
+    private String txanda;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        turnoa = 0;
+        txanda = "G";
         tableroa = new String[6][9];
         for(int i=0; i<tableroa.length; i++){
             for(int j=0; j<tableroa[0].length; j++){
@@ -103,6 +91,7 @@ public class MainKud implements Initializable {
             btnZut0.setDisable(true);
         }
         botoienKoloreaAldatu();
+
     }
 
     @FXML
@@ -195,7 +184,7 @@ public class MainKud implements Initializable {
 
     private void fitxaKokatu(int pErrenkada, int pZutabea){
         Image image;
-        if(turnoa == 0){
+        if("G".equals(txanda)){
             tableroa[pErrenkada][pZutabea] = "G";
             image = new Image("FitxaGorria.png");
         }
@@ -209,16 +198,22 @@ public class MainKud implements Initializable {
         tableroaPane.setAlignment(Pos.CENTER);
         tableroaPane.add(imageView, pZutabea, pErrenkada+1);
         tableroaPane.setHalignment(imageView, HPos.CENTER);
-        if(turnoa == 0){
-            turnoa = 1;
+        Boolean irabazi=irabaziDuBertikal(pErrenkada,pZutabea, txanda);
+        Boolean irabazi2=irabaziDuHorizontal(pErrenkada,pZutabea, txanda);
+        Boolean irabazi3=irabaziDuDiagonal(pErrenkada,pZutabea, txanda);
+        if("G".equals(txanda)){
+            txanda = "H";
         }
         else{
-            turnoa = 0;
+            txanda = "G";
         }
+
     }
 
+
+
     private void botoienKoloreaAldatu(){
-        if(turnoa == 0){
+        if("G".equals(txanda)){
             btnZut0.setStyle("-fx-background-color: #ff0600");
             btnZut1.setStyle("-fx-background-color: #ff0600");
             btnZut2.setStyle("-fx-background-color: #ff0600");
@@ -240,6 +235,126 @@ public class MainKud implements Initializable {
             btnZut7.setStyle("-fx-background-color: #fff700");
             btnZut8.setStyle("-fx-background-color: #fff700");
         }
+    }
+
+
+    public Boolean irabaziDuBertikal(int pErrenkada, int pZutabea, String pTxanda){
+        Boolean irabazi=false;
+        int kont=1;
+        if (pErrenkada<tableroa.length-3){
+            System.out.println("Coronau");
+            int i=1;
+            System.out.println(tableroa[pErrenkada+i][pZutabea]);
+            while ( pErrenkada+i<tableroa.length && pTxanda.equals(tableroa[pErrenkada+i][pZutabea])){
+                kont++;
+                i++;
+            }
+            if (kont==4){
+                irabazi=true;
+                System.out.println("irabazi duzu");
+
+            }
+        }
+
+
+        return irabazi;
+    }
+
+
+    public Boolean irabaziDuHorizontal(int pErrenkada, int pZutabea, String pTxanda){
+        Boolean irabazi=false;
+        int kont=1;
+        int j=1;
+        while ( pZutabea+j<tableroa[0].length && pTxanda.equals(tableroa[pErrenkada][pZutabea+j])){
+            kont++;
+            j++;
+        }
+        if (kont==4){
+            irabazi=true;
+            System.out.println("irabazi duzu");
+
+        }
+        else{
+            j=1;
+
+            while ( pZutabea-j>=0 && pTxanda.equals(tableroa[pErrenkada][pZutabea-j])){
+                kont++;
+                j++;
+                System.out.println(kont);
+            }
+            if (kont==4){
+                irabazi=true;
+                System.out.println("irabazi duzu");
+
+            }
+        }
+        return irabazi;
+    }
+
+
+    private Boolean irabaziDuDiagonal(int pErrenkada, int pZutabea, String pTxanda) {
+        Boolean irabazi=false;
+        int kont=1;
+        int i=1;
+        int j=1;
+        //ezkerra gora
+        while ( pErrenkada-i>=1 && pZutabea-j>=0 && pTxanda.equals(tableroa[pErrenkada-i][pZutabea-j])){
+            kont++;
+            j++;
+            i++;
+        }
+        if (kont==4){
+            irabazi=true;
+            System.out.println("irabazi duzu");
+
+        }
+        else{
+            //eskuina behera
+            j=1;
+            i=1;
+            while (pErrenkada+i<tableroa.length && pZutabea+j<tableroa[0].length && pTxanda.equals(tableroa[pErrenkada+i][pZutabea+j])){
+                kont++;
+                i++;
+                j++;
+            }
+            if (kont==4){
+                irabazi=true;
+                System.out.println("irabazi duzu");
+
+            }
+            else{
+                //eskuina gora
+                j=1;
+                i=1;
+                while (pErrenkada-i>=1 && pZutabea+j<tableroa[0].length && pTxanda.equals(tableroa[pErrenkada-i][pZutabea+j])){
+                    kont++;
+                    i++;
+                    j++;
+                }
+                if (kont==4){
+                    irabazi=true;
+                    System.out.println("irabazi duzu");
+
+                }
+                else{
+                    //ezkerra behera
+                    j=1;
+                    i=1;
+                    while (pErrenkada+i<tableroa.length && pZutabea-j>=0 && pTxanda.equals(tableroa[pErrenkada+i][pZutabea-j])){
+                        kont++;
+                        i++;
+                        j++;
+                    }
+                    if (kont==4){
+                        irabazi=true;
+                        System.out.println("irabazi duzu");
+
+                    }
+                }
+            }
+        }
+
+        return irabazi;
     }
 
 }

@@ -35,8 +35,7 @@ public class Main extends Application {
     mainUI = (Parent) loaderMain.load();
     mainKud = loaderMain.getController();
     mainKud.setMainApp(this);
-
-
+    mainKud.setJokoModua(1);
 
   }
 

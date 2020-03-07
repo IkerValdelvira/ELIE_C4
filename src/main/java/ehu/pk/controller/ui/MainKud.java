@@ -13,11 +13,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Stop;
 
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class MainKud implements Initializable {
 
     private Main mainApp;
+
+    private int jokoModua = 0;  // 0 -> Bi jokalari      1 -> Random IA     2 -> Intelligent IA
 
     @FXML
     private GridPane tableroaPane;
@@ -56,11 +59,11 @@ public class MainKud implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        txanda = "G";
+        txanda = "G";       // Gorriaren txanda
         tableroa = new String[6][9];
         for(int i=0; i<tableroa.length; i++){
             for(int j=0; j<tableroa[0].length; j++){
-                tableroa[i][j] = "Z";
+                tableroa[i][j] = "Z";   //  Fitxa zuria
             }
         }
 
@@ -188,8 +191,12 @@ public class MainKud implements Initializable {
             tableroa[pErrenkada][pZutabea] = "G";
             image = new Image("FitxaGorria.png");
         }
-        else{
+        else if (jokoModua == 0){
             tableroa[pErrenkada][pZutabea] = "H";
+            image = new Image("FitxaHoria.png");
+        }
+        else {
+            tableroa[pErrenkada][pZutabea] = "IA";
             image = new Image("FitxaHoria.png");
         }
         ImageView imageView = new ImageView(image);
@@ -202,15 +209,26 @@ public class MainKud implements Initializable {
         Boolean irabazi2=irabaziDuHorizontal(pErrenkada,pZutabea, txanda);
         Boolean irabazi3=irabaziDuDiagonal(pErrenkada,pZutabea, txanda);
         if("G".equals(txanda)){
-            txanda = "H";
+            switch(jokoModua) {
+                case 0:
+                    txanda = "H";
+                    break;
+                case 1:
+                    txanda = "IA";
+                    randomIA();
+                    break;
+                case 2:
+                    txanda = "IA";
+                    intelligentIA();
+                    break;
+            }
+
         }
         else{
             txanda = "G";
         }
 
     }
-
-
 
     private void botoienKoloreaAldatu(){
         if("G".equals(txanda)){
@@ -355,6 +373,45 @@ public class MainKud implements Initializable {
         }
 
         return irabazi;
+    }
+
+    public void setJokoModua(int modu) {
+        jokoModua = modu;
+    }
+
+    public void randomIA() {
+        try {
+            Thread.sleep(1000);     // Denbora pixka bat utziko diogu jokoa hain azkarra ez egiteko
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Random r = new Random();
+        int low = 0;
+        int high = tableroa[0].length+1;    // +1 9.zutabea ere sartzeko
+        int zutabea = r.nextInt(high-low) + low;
+
+
+        int errenkada = kokapenErrenkadaBilatu(zutabea);
+        System.out.println("Random IA-k aukeratutako laukia: [" + errenkada + " , " + zutabea + "]");
+        fitxaKokatu(errenkada,zutabea);
+        if(errenkada == 0){
+            btnZut0.setDisable(true);
+            btnZut1.setDisable(true);
+            btnZut2.setDisable(true);
+            btnZut3.setDisable(true);
+            btnZut4.setDisable(true);
+            btnZut5.setDisable(true);
+            btnZut6.setDisable(true);
+            btnZut7.setDisable(true);
+            btnZut8.setDisable(true);
+        }
+        botoienKoloreaAldatu();
+
+    }
+
+    public void intelligentIA() {
+
     }
 
 }

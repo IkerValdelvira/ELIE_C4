@@ -411,6 +411,14 @@ public class MainKud implements Initializable {
     }
 
     public void intelligentIA() {
+        /*
+        IA-ren pausuak:
+            1. Aukera posible guztiak lortu
+            2. Tableroaren kopia bat egin
+            3. Aukera posible guztiak aztertzen ditu banan-banan, hoberena lortzeko
+
+            (Inplentatu miniMax??? --> minValue, maxValue eta evaluationFunction sortu)
+         */
 
     }
 

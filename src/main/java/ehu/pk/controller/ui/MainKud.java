@@ -1,6 +1,7 @@
 package ehu.pk.controller.ui;
 
 import ehu.pk.Main;
+import ehu.pk.controller.IntelligentIA;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Stop;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -419,6 +421,8 @@ public class MainKud implements Initializable {
 
             (Inplentatu miniMax??? --> minValue, maxValue eta evaluationFunction sortu)
          */
+
+        Point aukeraOPt = IntelligentIA.emanZutabeHoberena(tableroa);
 
     }
 

@@ -1,7 +1,9 @@
 package ehu.pk.controller.db;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.Properties;
 
@@ -54,24 +56,8 @@ public class DBKudeatzaile {
 	private static DBKudeatzaile instantzia = new DBKudeatzaile();
 
 	private DBKudeatzaile()  {
-
-		Properties properties = null;
-		InputStream in = null;
-
-		try {
-			in = this.getClass().getResourceAsStream("/setup.properties");
-			properties = new Properties();
-			properties.load(in);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				in.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		this.conOpen(properties.getProperty("dbpath"));
+		String path = System.getProperty("user.home") + File.separatorChar + ".conecta4DB" + File.separatorChar + "conecta4DB.sqlite";
+		this.conOpen(path);
 
 	}
 

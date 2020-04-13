@@ -1,5 +1,7 @@
 package ehu.pk.controller;
 
+import ehu.pk.model.Tableroa;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -7,7 +9,7 @@ public class IntelligentIA {
 
     private static int globalDepth = 2;
 
-    public static Point emanZutabeHoberena (String[][] tableroa) {
+    public static Point emanZutabeHoberena (Tableroa tableroa) {
         Point aukeraHoberena = null;
         Double max = Double.NEGATIVE_INFINITY;
         Double v= Double.NEGATIVE_INFINITY;
@@ -23,7 +25,7 @@ public class IntelligentIA {
         return aukeraHoberena;
     }
 
-    private static Double minValue(String[][] tableroa, int depth) {
+    private static Double minValue(Tableroa tableroa, int depth) {
         Double v = Double.POSITIVE_INFINITY;
         Boolean isLose = null;  // Tableroa egoera honetan ea norbaitek galdu duen
         Boolean isWin = null;  // Tableroa egoera honetan ea norbaitek irabazi duen
@@ -38,7 +40,7 @@ public class IntelligentIA {
         return v;
     }
 
-    private static Double maxValue(String[][] tableroa, int depth) {
+    private static Double maxValue(Tableroa tableroa, int depth) {
         Double v = Double.NEGATIVE_INFINITY;
         Boolean isLose = null;  // Tableroa egoera honetan ea norbaitek galdu duen TODO
         Boolean isWin = null;  // Tableroa egoera honetan ea norbaitek irabazi duen TODO
@@ -52,7 +54,7 @@ public class IntelligentIA {
         return v;
     }
 
-    private static Double evaluationFunction(String[][] tableroa) {
+    private static Double evaluationFunction(Tableroa tableroa) {
         Double emaitza = null;
         // TODO
 
@@ -60,13 +62,13 @@ public class IntelligentIA {
         return emaitza;
     }
 
-    private static String[][] generateSuccessor(Point aukera, String[][] tableroa) {
-        String[][] tableroAux = tableroa;
-        tableroa[(int) aukera.getX()][(int) aukera.getY()]="IA";
+    private static Tableroa generateSuccessor(Point aukera, Tableroa tableroa) {
+        Tableroa tableroAux = tableroa;
+        tableroa.setFitxa((int) aukera.getX(),(int) aukera.getY(),"IA");
         return tableroAux;
     }
 
-    private static ArrayList<Point> emanAukeraGuztiak(String[][] tableroa) {
+    private static ArrayList<Point> emanAukeraGuztiak(Tableroa tableroa) {
         ArrayList<Point> emaitza = new ArrayList<>();
         // Sartu ahal diren kasilla guztiak lortu
 

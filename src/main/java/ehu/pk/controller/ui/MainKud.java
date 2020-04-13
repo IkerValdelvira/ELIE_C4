@@ -2,27 +2,30 @@ package ehu.pk.controller.ui;
 
 import ehu.pk.Main;
 import ehu.pk.controller.IntelligentIA;
+import ehu.pk.model.Tableroa;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Stop;
+import javafx.util.Duration;
 
 import java.awt.*;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class MainKud implements Initializable {
 
     private Main mainApp;
-
-    private int jokoModua = 0;  // 0 -> Bi jokalari      1 -> Random IA     2 -> Intelligent IA
 
     @FXML
     private GridPane tableroaPane;
@@ -54,24 +57,32 @@ public class MainKud implements Initializable {
     @FXML
     private Button btnZut8;
 
-    private String[][] tableroa;
-    private String txanda;
+    @FXML
+    private TextArea taJokaldiak;
 
+    private Tableroa tableroa;
+    private Boolean[] zutabeBetetak;
+    private String txanda;
+    private int jokoModua = 0;  // 0 -> Bi jokalari      1 -> Random IA     2 -> Intelligent IA
+    private long hasieraDenbora;
+    private long bukaeraDenbora;
+    private long partidaDenbora;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) {}
+
+    public void hasieratu(){
+        setButtonsDisable(false);
+        taJokaldiak.clear();
+        taJokaldiak.appendText("ONGI ETORRI Conecta 4 jokora!!!");
+        taJokaldiak.appendText("\n\nJokalari GORRIAren txanda...");
 
         txanda = "G";       // Gorriaren txanda
-        tableroa = new String[6][9];
-        for(int i=0; i<tableroa.length; i++){
-            for(int j=0; j<tableroa[0].length; j++){
-                tableroa[i][j] = "Z";   //  Fitxa zuria
-            }
-        }
+        tableroa = new Tableroa();
 
         for(int i=1; i<tableroaPane.getRowCount(); i++) {
             for (int j = 0; j < tableroaPane.getColumnCount(); j++) {
-                Image image = new Image("FitxaZuria.png");
+                Image image = new Image("pictures/FitxaZuria.png");
                 ImageView imageView = new ImageView(image);
                 imageView.setFitHeight(80);
                 imageView.setFitWidth(79);
@@ -81,7 +92,16 @@ public class MainKud implements Initializable {
             }
         }
 
+        zutabeBetetak = new Boolean[9];
+        for(int i=0; i<zutabeBetetak.length; i++){
+            zutabeBetetak[i] = false;
+        }
+
         botoienKoloreaAldatu();
+
+        if(jokoModua != 0){
+            hasieraDenbora = System.currentTimeMillis();
+        }
     }
 
     public void setMainApp(Main main) {
@@ -90,146 +110,115 @@ public class MainKud implements Initializable {
 
     @FXML
     public void onClickZut0(ActionEvent actionEvent){
-        int errenkada = kokapenErrenkadaBilatu(0);
+        int errenkada = tableroa.kokapenErrenkadaBilatu(0);
         fitxaKokatu(errenkada,0);
         if(errenkada == 0){
+            zutabeBetetak[0] = true;
             btnZut0.setDisable(true);
         }
         botoienKoloreaAldatu();
-
+        berdinetaKonprobatu();
     }
 
     @FXML
     public void onClickZut1(ActionEvent actionEvent){
-        int errenkada = kokapenErrenkadaBilatu(1);
+        int errenkada = tableroa.kokapenErrenkadaBilatu(1);
         fitxaKokatu(errenkada,1);
         if(errenkada == 0){
+            zutabeBetetak[1] = true;
             btnZut1.setDisable(true);
         }
         botoienKoloreaAldatu();
+        berdinetaKonprobatu();
     }
 
     @FXML
     public void onClickZut2(ActionEvent actionEvent){
-        int errenkada = kokapenErrenkadaBilatu(2);
+        int errenkada = tableroa.kokapenErrenkadaBilatu(2);
         fitxaKokatu(errenkada,2);
         if(errenkada == 0){
+            zutabeBetetak[2] = true;
             btnZut2.setDisable(true);
         }
         botoienKoloreaAldatu();
+        berdinetaKonprobatu();
     }
 
     @FXML
     public void onClickZut3(ActionEvent actionEvent){
-        int errenkada = kokapenErrenkadaBilatu(3);
+        int errenkada = tableroa.kokapenErrenkadaBilatu(3);
         fitxaKokatu(errenkada,3);
         if(errenkada == 0){
+            zutabeBetetak[3] = true;
             btnZut3.setDisable(true);
         }
         botoienKoloreaAldatu();
+        berdinetaKonprobatu();
     }
 
     @FXML
     public void onClickZut4(ActionEvent actionEvent){
-        int errenkada = kokapenErrenkadaBilatu(4);
+        int errenkada = tableroa.kokapenErrenkadaBilatu(4);
         fitxaKokatu(errenkada,4);
         if(errenkada == 0){
+            zutabeBetetak[4] = true;
             btnZut4.setDisable(true);
         }
         botoienKoloreaAldatu();
+        berdinetaKonprobatu();
     }
 
     @FXML
     public void onClickZut5(ActionEvent actionEvent){
-        int errenkada = kokapenErrenkadaBilatu(5);
+        int errenkada = tableroa.kokapenErrenkadaBilatu(5);
         fitxaKokatu(errenkada,5);
         if(errenkada == 0){
+            zutabeBetetak[5] = true;
             btnZut5.setDisable(true);
         }
         botoienKoloreaAldatu();
+        berdinetaKonprobatu();
     }
 
     @FXML
     public void onClickZut6(ActionEvent actionEvent){
-        int errenkada = kokapenErrenkadaBilatu(6);
+        int errenkada = tableroa.kokapenErrenkadaBilatu(6);
         fitxaKokatu(errenkada,6);
         if(errenkada == 0){
+            zutabeBetetak[6] = true;
             btnZut6.setDisable(true);
         }
         botoienKoloreaAldatu();
+        berdinetaKonprobatu();
     }
 
     @FXML
     public void onClickZut7(ActionEvent actionEvent){
-        int errenkada = kokapenErrenkadaBilatu(7);
+        int errenkada = tableroa.kokapenErrenkadaBilatu(7);
         fitxaKokatu(errenkada,7);
         if(errenkada == 0){
+            zutabeBetetak[7] = true;
             btnZut7.setDisable(true);
         }
         botoienKoloreaAldatu();
+        berdinetaKonprobatu();
     }
 
     @FXML
     public void onClickZut8(ActionEvent actionEvent){
-        int errenkada = kokapenErrenkadaBilatu(8);
+        int errenkada = tableroa.kokapenErrenkadaBilatu(8);
         fitxaKokatu(errenkada,8);
         if(errenkada == 0){
+            zutabeBetetak[8] = true;
             btnZut8.setDisable(true);
         }
         botoienKoloreaAldatu();
+        berdinetaKonprobatu();
     }
 
-    private int kokapenErrenkadaBilatu(int pZut){
-        int i = tableroa.length-1;
-        while(i>0 && !tableroa[i][pZut].equals("Z")){
-            i--;
-        }
-        return i;
-    }
-
-    private void fitxaKokatu(int pErrenkada, int pZutabea){
-        Image image;
-        if("G".equals(txanda)){
-            tableroa[pErrenkada][pZutabea] = "G";
-            image = new Image("FitxaGorria.png");
-        }
-        else if (jokoModua == 0){
-            tableroa[pErrenkada][pZutabea] = "H";
-            image = new Image("FitxaHoria.png");
-        }
-        else {
-            tableroa[pErrenkada][pZutabea] = "IA";
-            image = new Image("FitxaHoria.png");
-        }
-        ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(80);
-        imageView.setFitWidth(79);
-        tableroaPane.setAlignment(Pos.CENTER);
-        tableroaPane.add(imageView, pZutabea, pErrenkada+1);
-        tableroaPane.setHalignment(imageView, HPos.CENTER);
-        Boolean irabazi=irabaziDuBertikal(pErrenkada,pZutabea, txanda);
-        Boolean irabazi2=irabaziDuHorizontal(pErrenkada,pZutabea, txanda);
-        Boolean irabazi3=irabaziDuDiagonal(pErrenkada,pZutabea, txanda);
-        if("G".equals(txanda)){
-            switch(jokoModua) {
-                case 0:
-                    txanda = "H";
-                    break;
-                case 1:
-                    txanda = "IA";
-                    randomIA();
-                    break;
-                case 2:
-                    txanda = "IA";
-                    intelligentIA();
-                    break;
-            }
-
-        }
-        else{
-            txanda = "G";
-        }
-
+    @FXML
+    public void onClickAtera(ActionEvent actionEvent){
+        mainApp.sarreraErakutsi();
     }
 
     private void botoienKoloreaAldatu(){
@@ -245,136 +234,127 @@ public class MainKud implements Initializable {
             btnZut8.setStyle("-fx-background-color: #ff0600");
         }
         else{
-            btnZut0.setStyle("-fx-background-color: #fff700");
-            btnZut1.setStyle("-fx-background-color: #fff700");
-            btnZut2.setStyle("-fx-background-color: #fff700");
-            btnZut3.setStyle("-fx-background-color: #fff700");
-            btnZut4.setStyle("-fx-background-color: #fff700");
-            btnZut5.setStyle("-fx-background-color: #fff700");
-            btnZut6.setStyle("-fx-background-color: #fff700");
-            btnZut7.setStyle("-fx-background-color: #fff700");
-            btnZut8.setStyle("-fx-background-color: #fff700");
+            btnZut0.setStyle("-fx-background-color: #2e8ac6");
+            btnZut1.setStyle("-fx-background-color: #2e8ac6");
+            btnZut2.setStyle("-fx-background-color: #2e8ac6");
+            btnZut3.setStyle("-fx-background-color: #2e8ac6");
+            btnZut4.setStyle("-fx-background-color: #2e8ac6");
+            btnZut5.setStyle("-fx-background-color: #2e8ac6");
+            btnZut6.setStyle("-fx-background-color: #2e8ac6");
+            btnZut7.setStyle("-fx-background-color: #2e8ac6");
+            btnZut8.setStyle("-fx-background-color: #2e8ac6");
         }
     }
 
-
-    public Boolean irabaziDuBertikal(int pErrenkada, int pZutabea, String pTxanda){
-        Boolean irabazi=false;
-        int kont=1;
-        if (pErrenkada<tableroa.length-3){
-            System.out.println("Coronau");
-            int i=1;
-            System.out.println(tableroa[pErrenkada+i][pZutabea]);
-            while ( pErrenkada+i<tableroa.length && pTxanda.equals(tableroa[pErrenkada+i][pZutabea])){
-                kont++;
-                i++;
-            }
-            if (kont==4){
-                irabazi=true;
-                System.out.println("irabazi duzu");
-
-            }
-        }
-
-
-        return irabazi;
+    private void setButtonsDisable(Boolean bool){
+        btnZut0.setDisable(bool);
+        btnZut1.setDisable(bool);
+        btnZut2.setDisable(bool);
+        btnZut3.setDisable(bool);
+        btnZut4.setDisable(bool);
+        btnZut5.setDisable(bool);
+        btnZut6.setDisable(bool);
+        btnZut7.setDisable(bool);
+        btnZut8.setDisable(bool);
     }
 
-
-    public Boolean irabaziDuHorizontal(int pErrenkada, int pZutabea, String pTxanda){
-        Boolean irabazi=false;
-        int kont=1;
-        int j=1;
-        while ( pZutabea+j<tableroa[0].length && pTxanda.equals(tableroa[pErrenkada][pZutabea+j])){
-            kont++;
-            j++;
-        }
-        if (kont==4){
-            irabazi=true;
-            System.out.println("irabazi duzu");
-
-        }
-        else{
-            j=1;
-
-            while ( pZutabea-j>=0 && pTxanda.equals(tableroa[pErrenkada][pZutabea-j])){
-                kont++;
-                j++;
-                System.out.println(kont);
+    private void fitxaKokatu(int pErrenkada, int pZutabea) {
+        Image image;
+        if ("G".equals(txanda)) {
+            tableroa.setFitxa(pErrenkada, pZutabea, "G");
+            image = new Image("pictures/FitxaGorria.png");
+            taJokaldiak.appendText("\nGorria: [" + (pErrenkada + 1) + "," + (pZutabea + 1) + "] posizioan fitxa kokatu du.\n");
+            if (jokoModua == 0) {
+                taJokaldiak.appendText("\nJokalari URDINAren txanda...");
+            } else {
+                taJokaldiak.appendText("\nIA-ren txanda...");
             }
-            if (kont==4){
-                irabazi=true;
-                System.out.println("irabazi duzu");
-
+        } else if (jokoModua == 0) {
+            tableroa.setFitxa(pErrenkada, pZutabea, "H");
+            image = new Image("pictures/FitxaUrdina.png");
+            taJokaldiak.appendText("\nUrdina: [" + (pErrenkada + 1) + "," + (pZutabea + 1) + "] posizioan fitxa kokatu du.\n");
+            taJokaldiak.appendText("\nJokalari GORRIAren txanda...");
+        } else {
+            tableroa.setFitxa(pErrenkada, pZutabea, "IA");
+            image = new Image("pictures/FitxaUrdina.png");
+            taJokaldiak.appendText("\nIA: [" + (pErrenkada + 1) + "," + (pZutabea + 1) + "] posizioan fitxa kokatu du.\n");
+            taJokaldiak.appendText("\nJokalari GORRIAren txanda...");
+        }
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(80);
+        imageView.setFitWidth(79);
+        tableroaPane.setAlignment(Pos.CENTER);
+        tableroaPane.add(imageView, pZutabea, pErrenkada + 1);
+        tableroaPane.setHalignment(imageView, HPos.CENTER);
+        Boolean irabaziDu = irabaziDu(pErrenkada, pZutabea, txanda);
+        if (irabaziDu) {
+            setButtonsDisable(true);
+            this.setButtonsDisable(true);
+            PauseTransition pauseIrabazlea = new PauseTransition(Duration.seconds(1));
+            pauseIrabazlea.setOnFinished(event -> {
+                if (jokoModua == 0) {
+                    mainApp.amaieraJokJokErakutsi(txanda);
+                } else if ("G".equals(txanda)) {
+                    mainApp.irabazleJokOrdErakutsi(partidaDenbora);
+                } else {
+                    mainApp.galtzaileJokOrdErakutsi();
+                }
+            });
+            pauseIrabazlea.play();
+        } else {
+            if ("G".equals(txanda)) {
+                switch (jokoModua) {
+                    case 0:
+                        txanda = "H";
+                        break;
+                    case 1:
+                        txanda = "IA";
+                        this.setButtonsDisable(true);
+                        PauseTransition pauseRandomIA = new PauseTransition(Duration.seconds(2));
+                        pauseRandomIA.setOnFinished(event -> {
+                            randomIA();
+                            this.setButtonsDisable(false);
+                        });
+                        pauseRandomIA.play();
+                        break;
+                    case 2:
+                        txanda = "IA";
+                        this.setButtonsDisable(true);
+                        PauseTransition pauseIntelligentIA = new PauseTransition(Duration.seconds(2));
+                        pauseIntelligentIA.setOnFinished(event -> {
+                            intelligentIA();
+                        });
+                        pauseIntelligentIA.play();
+                        this.setButtonsDisable(false);
+                        break;
+                }
+            } else {
+                txanda = "G";
             }
         }
-        return irabazi;
     }
 
-
-    private Boolean irabaziDuDiagonal(int pErrenkada, int pZutabea, String pTxanda) {
-        Boolean irabazi=false;
-        int kont=1;
-        int i=1;
-        int j=1;
-        //ezkerra gora
-        while ( pErrenkada-i>=1 && pZutabea-j>=0 && pTxanda.equals(tableroa[pErrenkada-i][pZutabea-j])){
-            kont++;
-            j++;
-            i++;
+    public boolean irabaziDu(int pErrenkada, int pZutabea, String pTxanda){
+        if(tableroa.irabaziDu(pErrenkada,pZutabea,pTxanda)){
+            if(jokoModua != 0){
+                bukaeraDenbora = System.currentTimeMillis();
+                partidaDenbora = (bukaeraDenbora - hasieraDenbora);
+            }
+            return true;
         }
-        if (kont==4){
-            irabazi=true;
-            System.out.println("irabazi duzu");
+        return false;
+    }
 
-        }
-        else{
-            //eskuina behera
-            j=1;
-            i=1;
-            while (pErrenkada+i<tableroa.length && pZutabea+j<tableroa[0].length && pTxanda.equals(tableroa[pErrenkada+i][pZutabea+j])){
+    public void berdinetaKonprobatu(){
+        int kont = 0;
+        for(int i=0; i<zutabeBetetak.length; i++){
+            if(zutabeBetetak[i]){
                 kont++;
-                i++;
-                j++;
-            }
-            if (kont==4){
-                irabazi=true;
-                System.out.println("irabazi duzu");
-
-            }
-            else{
-                //eskuina gora
-                j=1;
-                i=1;
-                while (pErrenkada-i>=1 && pZutabea+j<tableroa[0].length && pTxanda.equals(tableroa[pErrenkada-i][pZutabea+j])){
-                    kont++;
-                    i++;
-                    j++;
-                }
-                if (kont==4){
-                    irabazi=true;
-                    System.out.println("irabazi duzu");
-
-                }
-                else{
-                    //ezkerra behera
-                    j=1;
-                    i=1;
-                    while (pErrenkada+i<tableroa.length && pZutabea-j>=0 && pTxanda.equals(tableroa[pErrenkada+i][pZutabea-j])){
-                        kont++;
-                        i++;
-                        j++;
-                    }
-                    if (kont==4){
-                        irabazi=true;
-                        System.out.println("irabazi duzu");
-
-                    }
-                }
             }
         }
-
-        return irabazi;
+        if(kont==9){
+            mainApp.berdiketaErakutsi(jokoModua);
+        }
     }
 
     public void setJokoModua(int modu) {
@@ -382,31 +362,56 @@ public class MainKud implements Initializable {
     }
 
     public void randomIA() {
-        try {
-            Thread.sleep(1000);     // Denbora pixka bat utziko diogu jokoa hain azkarra ez egiteko
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         Random r = new Random();
         int low = 0;
-        int high = tableroa[0].length+1;    // +1 9.zutabea ere sartzeko
-        int zutabea = r.nextInt(high-low) + low;
+        int high = tableroa.getZutabeKop()-1;    // +1 9.zutabea ere sartzeko
+        int zutabea = r.nextInt(high - low + 1) + low;
+        while(zutabeBetetak[zutabea]){
+            zutabea = r.nextInt(high - low + 1) + low;
+        }
 
+        System.out.println("Random IA ---> Zutabea: " + zutabea);
 
-        int errenkada = kokapenErrenkadaBilatu(zutabea);
+        int errenkada = tableroa.kokapenErrenkadaBilatu(zutabea);
         System.out.println("Random IA-k aukeratutako laukia: [" + errenkada + " , " + zutabea + "]");
         fitxaKokatu(errenkada,zutabea);
         if(errenkada == 0){
-            btnZut0.setDisable(true);
-            btnZut1.setDisable(true);
-            btnZut2.setDisable(true);
-            btnZut3.setDisable(true);
-            btnZut4.setDisable(true);
-            btnZut5.setDisable(true);
-            btnZut6.setDisable(true);
-            btnZut7.setDisable(true);
-            btnZut8.setDisable(true);
+            if(zutabea == 0){
+                zutabeBetetak[0] = true;
+                btnZut0.setDisable(true);
+            }
+            else if(zutabea == 1){
+                zutabeBetetak[1] = true;
+                btnZut1.setDisable(true);
+            }
+            else if(zutabea == 2){
+                zutabeBetetak[2] = true;
+                btnZut2.setDisable(true);
+            }
+            else if(zutabea == 3){
+                zutabeBetetak[3] = true;
+                btnZut3.setDisable(true);
+            }
+            else if(zutabea == 4){
+                zutabeBetetak[4] = true;
+                btnZut4.setDisable(true);
+            }
+            else if(zutabea == 5){
+                zutabeBetetak[5] = true;
+                btnZut5.setDisable(true);
+            }
+            else if(zutabea == 6){
+                zutabeBetetak[6] = true;
+                btnZut6.setDisable(true);
+            }
+            else if(zutabea == 7){
+                zutabeBetetak[7] = true;
+                btnZut7.setDisable(true);
+            }
+            else {
+                zutabeBetetak[8] = true;
+                btnZut8.setDisable(true);
+            }
         }
         botoienKoloreaAldatu();
 

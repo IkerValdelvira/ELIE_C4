@@ -1,5 +1,6 @@
 package ehu.pk.controller;
 
+import ehu.pk.controller.ui.MainKud;
 import ehu.pk.model.Tableroa;
 
 import java.awt.*;
@@ -12,7 +13,7 @@ public class IntelligentIA {
     public static Point emanZutabeHoberena (Tableroa tableroa) {
         Point aukeraHoberena = null;
         Double max = Double.NEGATIVE_INFINITY;
-        Double v= Double.NEGATIVE_INFINITY;
+        Double v = Double.NEGATIVE_INFINITY;
         ArrayList<Point> aukeraPosibleGuztiak = emanAukeraGuztiak(tableroa);
         for (Point aukera: aukeraPosibleGuztiak) {
             v = minValue(generateSuccessor(aukera, tableroa), 0);
@@ -71,12 +72,36 @@ public class IntelligentIA {
     private static ArrayList<Point> emanAukeraGuztiak(Tableroa tableroa) {
         ArrayList<Point> emaitza = new ArrayList<>();
         // Sartu ahal diren kasilla guztiak lortu
-
+        for (int zut = 0; zut < tableroa.getZutabeKop(); zut++) {
+            int erren = tableroa.kokapenErrenkadaBilatu(zut);
+            if (erren != 0)
+                emaitza.add(new Point(erren,zut));
+        }
         return emaitza;
     }
 
     public static void main(String[] args) {
-        emanZutabeHoberena(null);
+        //emanZutabeHoberena(null);
+        Tableroa t = new Tableroa();
+        for (int i = 1; i < t.getErrenkadaKop()+1; i++) {
+            int j = t.kokapenErrenkadaBilatu(0);
+            t.setFitxa(j, 0, "G");
+        }
+
+        for (int i = 0; i < t.getErrenkadaKop(); i++) {
+            System.out.println(t.irabaziDuBertikal(i, 0, "G"));
+            System.out.println(t.getFitxa(i,0));
+            System.out.println("---");
+        }
+        System.out.println("####################");
+        t = new Tableroa();
+        for (int i = 1; i < t.getZutabeKop(); i++) {
+            t.setFitxa(1, i, "G");
+        }
+
+        System.out.println(emanAukeraGuztiak(t));
+        System.out.println(t.irabaziDuHorizontal(2,1,"G"));
+
     }
 
 }

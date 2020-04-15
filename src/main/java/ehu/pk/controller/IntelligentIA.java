@@ -72,7 +72,7 @@ public class IntelligentIA {
     private static ArrayList<Point> emanAukeraGuztiak(Tableroa tableroa) {
         ArrayList<Point> emaitza = new ArrayList<>();
         // Sartu ahal diren kasilla guztiak lortu
-        for (int zut = 0; zut < tableroa.getZutabeKop(); zut++) {
+        for (int zut = 1; zut < tableroa.getZutabeKop(); zut++) {
             int erren = tableroa.kokapenErrenkadaBilatu(zut);
             if (erren != 0)
                 emaitza.add(new Point(erren,zut));
@@ -88,7 +88,7 @@ public class IntelligentIA {
             t.setFitxa(j, 0, "G");
         }
 
-        for (int i = 0; i < t.getErrenkadaKop(); i++) {
+        for (int i = 1; i < t.getErrenkadaKop(); i++) {
             System.out.println(t.irabaziDuBertikal(i, 0, "G"));
             System.out.println(t.getFitxa(i,0));
             System.out.println("---");
@@ -99,8 +99,11 @@ public class IntelligentIA {
             t.setFitxa(1, i, "G");
         }
 
-        System.out.println(emanAukeraGuztiak(t));
-        System.out.println(t.irabaziDuHorizontal(2,1,"G"));
+        for (int i = 1; i < t.getZutabeKop(); i++) {
+            System.out.println(t.irabaziDuHorizontal(1, i, "G"));
+            System.out.println(t.getFitxa(1,i));
+            System.out.println("---");
+        }
 
     }
 

@@ -5,6 +5,7 @@ import ehu.pk.model.Tableroa;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class IntelligentIA {
 
@@ -43,8 +44,8 @@ public class IntelligentIA {
 
     private static Double maxValue(Tableroa tableroa, int depth) {
         Double v = Double.NEGATIVE_INFINITY;
-        Boolean isLose = null;  // Tableroa egoera honetan ea norbaitek galdu duen TODO
-        Boolean isWin = null;  // Tableroa egoera honetan ea norbaitek irabazi duen TODO
+        Boolean isLose = tableroa.irabaziDuJokalariak("G");  // Tableroa egoera honetan ea norbaitek galdu duen
+        Boolean isWin = tableroa.irabaziDuJokalariak("IA");;  // Tableroa egoera honetan ea norbaitek irabazi duen
         if (globalDepth == depth || isLose == true || isWin == true)
             return evaluationFunction(tableroa);
         else {
@@ -56,11 +57,17 @@ public class IntelligentIA {
     }
 
     private static Double evaluationFunction(Tableroa tableroa) {
-        Double emaitza = null;
-        // TODO
+
+        if(tableroa.irabaziDuJokalariak("IA"))
+            return Double.MAX_VALUE;
+        else if (tableroa.irabaziDuJokalariak("G"))
+            return Double.MIN_VALUE;
+        else {
+            Double emaitza = null;
 
 
-        return emaitza;
+            return emaitza;
+        }
     }
 
     private static Tableroa generateSuccessor(Point aukera, Tableroa tableroa) {
@@ -72,7 +79,7 @@ public class IntelligentIA {
     private static ArrayList<Point> emanAukeraGuztiak(Tableroa tableroa) {
         ArrayList<Point> emaitza = new ArrayList<>();
         // Sartu ahal diren kasilla guztiak lortu
-        for (int zut = 1; zut < tableroa.getZutabeKop(); zut++) {
+        for (int zut = 0; zut < tableroa.getZutabeKop(); zut++) {
             int erren = tableroa.kokapenErrenkadaBilatu(zut);
             if (erren != 0)
                 emaitza.add(new Point(erren,zut));
@@ -80,30 +87,56 @@ public class IntelligentIA {
         return emaitza;
     }
 
+    public static Point emanAukeraHoberena(Tableroa tableroa) {
+
+        ArrayList<Point> aukeraGuztiak = emanAukeraGuztiak(tableroa);
+        for (Point aukera: aukeraGuztiak) {
+            int erren = (int) aukera.getX();
+            int zut = (int) aukera.getY();
+            if (tableroa.irabaziDu(erren,zut, "G"))
+                return new Point(erren,zut);
+
+            tableroa.setFitxa(erren, zut, "IA");
+            if (tableroa.irabaziDu(erren,zut, "IA"))
+                return new Point(erren,zut);
+
+            if (tableroa.albokorenBatDauka(erren,zut,"IA"))
+                return new Point(erren,zut);
+        }
+
+
+        for (int erren = 1; erren < tableroa.getErrenkadaKop() + 1; erren++) {  // Errenkada
+            for (int zut = 0; zut < tableroa.getZutabeKop(); zut++) {     // Zutabe
+                tableroa.setFitxa(erren, zut, "G");
+                if (tableroa.irabaziDu(erren,zut, "G"))
+                    return new Point(erren,zut);
+
+                tableroa.setFitxa(erren, zut, "IA");
+                if (tableroa.irabaziDu(erren,zut, "IA"))
+                    return new Point(erren,zut);
+
+                if (tableroa.albokorenBatDauka(erren,zut,"IA"))
+                    return new Point(erren,zut);
+            }
+        }
+        return new Point(new Random(1,5));
+    }
+
     public static void main(String[] args) {
         //emanZutabeHoberena(null);
         Tableroa t = new Tableroa();
-        for (int i = 1; i < t.getErrenkadaKop()+1; i++) {
-            int j = t.kokapenErrenkadaBilatu(0);
-            t.setFitxa(j, 0, "G");
-        }
+//        for (int i = 1; i < t.getErrenkadaKop() + 1; i++) {
+//            int j = t.kokapenErrenkadaBilatu(0);
+//            t.setFitxa(j, 0, "G");
+//        }
+        t.setFitxa(5,0,"G");
+        t.setFitxa(4,0,"G");
+        t.setFitxa(3,0,"G");
+        t.setFitxa(2,0,"G");
+//        t.setFitxa(1,0, "G");
 
-        for (int i = 1; i < t.getErrenkadaKop(); i++) {
-            System.out.println(t.irabaziDuBertikal(i, 0, "G"));
-            System.out.println(t.getFitxa(i,0));
-            System.out.println("---");
-        }
-        System.out.println("####################");
-        t = new Tableroa();
-        for (int i = 1; i < t.getZutabeKop(); i++) {
-            t.setFitxa(1, i, "G");
-        }
+        System.out.println(emanAukeraGuztiak(t));
 
-        for (int i = 1; i < t.getZutabeKop(); i++) {
-            System.out.println(t.irabaziDuHorizontal(1, i, "G"));
-            System.out.println(t.getFitxa(1,i));
-            System.out.println("---");
-        }
 
     }
 

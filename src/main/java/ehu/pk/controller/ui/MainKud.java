@@ -427,7 +427,56 @@ public class MainKud implements Initializable {
             (Inplentatu miniMax??? --> minValue, maxValue eta evaluationFunction sortu)
          */
 
-        Point aukeraOPt = IntelligentIA.emanZutabeHoberena(tableroa);
+//        Point aukeraOPt = IntelligentIA.emanZutabeHoberena(tableroa);
+        Point aukeraOPt = IntelligentIA.emanAukeraHoberena(tableroa);
+
+        if (aukeraOPt == null)
+            randomIA();
+        else {
+            int errenkada = (int) aukeraOPt.getX();
+            int zutabea = (int) aukeraOPt.getY();
+            System.out.println("Intelligent IA-k aukeratutako laukia: [" + errenkada + " , " + zutabea + "]");
+            fitxaKokatu(errenkada,zutabea);
+            if(errenkada == 0){
+                if(zutabea == 0){
+                    zutabeBetetak[0] = true;
+                    btnZut0.setDisable(true);
+                }
+                else if(zutabea == 1){
+                    zutabeBetetak[1] = true;
+                    btnZut1.setDisable(true);
+                }
+                else if(zutabea == 2){
+                    zutabeBetetak[2] = true;
+                    btnZut2.setDisable(true);
+                }
+                else if(zutabea == 3){
+                    zutabeBetetak[3] = true;
+                    btnZut3.setDisable(true);
+                }
+                else if(zutabea == 4){
+                    zutabeBetetak[4] = true;
+                    btnZut4.setDisable(true);
+                }
+                else if(zutabea == 5){
+                    zutabeBetetak[5] = true;
+                    btnZut5.setDisable(true);
+                }
+                else if(zutabea == 6){
+                    zutabeBetetak[6] = true;
+                    btnZut6.setDisable(true);
+                }
+                else if(zutabea == 7){
+                    zutabeBetetak[7] = true;
+                    btnZut7.setDisable(true);
+                }
+                else {
+                    zutabeBetetak[8] = true;
+                    btnZut8.setDisable(true);
+                }
+            }
+            botoienKoloreaAldatu();
+        }
 
     }
 

@@ -90,36 +90,32 @@ public class IntelligentIA {
     public static Point emanAukeraHoberena(Tableroa tableroa) {
 
         ArrayList<Point> aukeraGuztiak = emanAukeraGuztiak(tableroa);
+        Point galdu = null;
+        Point irabazi = null;
+        Point alboko = null;
+
         for (Point aukera: aukeraGuztiak) {
             int erren = (int) aukera.getX();
             int zut = (int) aukera.getY();
             if (tableroa.irabaziDu(erren,zut, "G"))
-                return new Point(erren,zut);
+                galdu = new Point(erren,zut);
 
             tableroa.setFitxa(erren, zut, "IA");
             if (tableroa.irabaziDu(erren,zut, "IA"))
-                return new Point(erren,zut);
+                irabazi = new Point(erren,zut);
 
             if (tableroa.albokorenBatDauka(erren,zut,"IA"))
-                return new Point(erren,zut);
+                alboko = new Point(erren,zut);
         }
 
-
-        for (int erren = 1; erren < tableroa.getErrenkadaKop() + 1; erren++) {  // Errenkada
-            for (int zut = 0; zut < tableroa.getZutabeKop(); zut++) {     // Zutabe
-                tableroa.setFitxa(erren, zut, "G");
-                if (tableroa.irabaziDu(erren,zut, "G"))
-                    return new Point(erren,zut);
-
-                tableroa.setFitxa(erren, zut, "IA");
-                if (tableroa.irabaziDu(erren,zut, "IA"))
-                    return new Point(erren,zut);
-
-                if (tableroa.albokorenBatDauka(erren,zut,"IA"))
-                    return new Point(erren,zut);
-            }
-        }
-        return new Point(new Random(1,5));
+        if(galdu != null)
+            return galdu;
+        else if(irabazi !=null)
+            return irabazi;
+        else if(alboko != null)
+            return alboko;
+        else
+            return null;
     }
 
     public static void main(String[] args) {

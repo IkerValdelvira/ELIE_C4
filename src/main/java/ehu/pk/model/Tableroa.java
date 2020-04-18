@@ -166,11 +166,11 @@ public class Tableroa {
     public boolean albokorenBatDauka(int errenkada, int zutabe, String jokalari) {
 
         if (errenkada < 5) {
-            if (jokalari.equals(tableroa[errenkada-1][zutabe])) // Behean
+            if (jokalari.equals(tableroa[errenkada+1][zutabe])) // Behean
                 return true;
         }
         else if (errenkada > 1) {
-            if (jokalari.equals(tableroa[errenkada+1][zutabe])) // Goian
+            if (jokalari.equals(tableroa[errenkada-1][zutabe])) // Goian
                 return true;
         }
         else if (zutabe < 0) {
@@ -183,13 +183,13 @@ public class Tableroa {
         }
 
         else if ((0 < zutabe) && ( zutabe < 8) && (1 < errenkada) && (errenkada < 5)) {
-            if (jokalari.equals(tableroa[errenkada-1][zutabe-1])) // Behean ezkerrean
+            if (jokalari.equals(tableroa[errenkada+1][zutabe-1])) // Behean ezkerrean
                 return true;
-            else if (jokalari.equals(tableroa[errenkada-1][zutabe+1])) // Behean eskuinean
+            else if (jokalari.equals(tableroa[errenkada+1][zutabe+1])) // Behean eskuinean
                 return true;
-            else if (jokalari.equals(tableroa[errenkada+1][zutabe-1])) // Goian ezkerrean
+            else if (jokalari.equals(tableroa[errenkada-1][zutabe-1])) // Goian ezkerrean
                 return true;
-            else if (jokalari.equals(tableroa[errenkada+1][zutabe+1])) // Goian eskuinean
+            else if (jokalari.equals(tableroa[errenkada-1][zutabe+1])) // Goian eskuinean
                 return true;
         }
 

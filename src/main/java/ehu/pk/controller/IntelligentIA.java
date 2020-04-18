@@ -90,6 +90,7 @@ public class IntelligentIA {
     public static Point emanAukeraHoberena(Tableroa tableroa) {
 
         ArrayList<Point> aukeraGuztiak = emanAukeraGuztiak(tableroa);
+        System.out.println(aukeraGuztiak);
         Point galdu = null;
         Point irabazi = null;
         Point alboko = null;
@@ -97,6 +98,7 @@ public class IntelligentIA {
         for (Point aukera: aukeraGuztiak) {
             int erren = (int) aukera.getX();
             int zut = (int) aukera.getY();
+            tableroa.setFitxa(erren,zut,"G");
             if (tableroa.irabaziDu(erren,zut, "G"))
                 galdu = new Point(erren,zut);
 
@@ -106,6 +108,7 @@ public class IntelligentIA {
 
             if (tableroa.albokorenBatDauka(erren,zut,"IA"))
                 alboko = new Point(erren,zut);
+            tableroa.setFitxa(erren,zut,"Z");
         }
 
         if(galdu != null)

@@ -693,34 +693,38 @@ public class Tableroa {
     }
 
     public boolean egoeraBereziaDago(int erren, int zut, String pJokalaria) {
-        boolean emaitza = false;
         if(zut > 0 && zut < tableroa[0].length-1){
-            if("Z".equals(tableroa[erren][zut-1]) && (erren == tableroa.length-1 || !"Z".equals(tableroa[erren-1][zut-1]))){
+            // ... [UNEKOA] [JOK] [JOK] [LIBRE] ...
+            if("Z".equals(tableroa[erren][zut-1]) && (erren == tableroa.length-1 || !"Z".equals(tableroa[erren+1][zut-1]))){
                 if(zut <= 5
                         && pJokalaria.equals(tableroa[erren][zut+1])
                         && pJokalaria.equals(tableroa[erren][zut+2])
                         && "Z".equals(tableroa[erren][zut+3])
-                        && (erren == tableroa.length-1 || !"Z".equals(tableroa[erren-1][zut+3]))){
+                        && (erren == tableroa.length-1 || !"Z".equals(tableroa[erren+1][zut+3]))){
                     return true;
                 }
             }
-            if("Z".equals(tableroa[erren][zut+1]) && (erren == tableroa.length-1 || !"Z".equals(tableroa[erren-1][zut+1]))){
+            // ... [LIBRE] [JOK] [JOK] [UNEKOA] ...
+            else if("Z".equals(tableroa[erren][zut+1]) && (erren == tableroa.length-1 || !"Z".equals(tableroa[erren+1][zut+1]))){
                 if(zut >= 3
                         && pJokalaria.equals(tableroa[erren][zut-1])
                         && pJokalaria.equals(tableroa[erren][zut-2])
                         && "Z".equals(tableroa[erren][zut-3])
-                        && (erren == tableroa.length-1 || !"Z".equals(tableroa[erren-1][zut-3]))){
+                        && (erren == tableroa.length-1 || !"Z".equals(tableroa[erren+1][zut-3]))){
                     return true;
                 }
             }
-            else{
-                return false;
+            // ... [LIBRE] [JOK] [UNEKOA] [JOK] [LIBRE] ...
+            else if(pJokalaria.equals(tableroa[erren][zut-1]) && pJokalaria.equals(tableroa[erren][zut+1]) && (erren == tableroa.length-1 || (!"Z".equals(tableroa[erren+1][zut-1]) && !"Z".equals(tableroa[erren+1][zut+1])))){
+                if(zut >= 2 && zut <= tableroa[0].length-3
+                        && "Z".equals(tableroa[erren][zut+2])
+                        && "Z".equals(tableroa[erren][zut-2])
+                        && (erren == tableroa.length-1 || (!"Z".equals(tableroa[erren+1][zut-2]) && !"Z".equals(tableroa[erren+1][zut+2])))){
+                    return true;
+                }
             }
         }
-        else{
-            return false;
-        }
-        return emaitza;
+        return false;
     }
 
     public Tableroa tableroaKopiatu() {

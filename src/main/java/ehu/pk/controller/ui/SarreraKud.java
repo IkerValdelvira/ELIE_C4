@@ -1,23 +1,14 @@
 package ehu.pk.controller.ui;
 
 import ehu.pk.Main;
-import ehu.pk.controller.IntelligentIA;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 
-import java.awt.*;
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 public class SarreraKud implements Initializable {
 

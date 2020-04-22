@@ -12,6 +12,19 @@ public class DBKudeatzaile {
 
 	Connection conn = null;
 
+	// singleton patroia
+	private static DBKudeatzaile instantzia = new DBKudeatzaile();
+
+	private DBKudeatzaile()  {
+		String path = System.getProperty("user.home") + File.separatorChar + ".conecta4DB" + File.separatorChar + "conecta4DB.sqlite";
+		this.conOpen(path);
+
+	}
+
+	public static DBKudeatzaile getInstantzia() {
+		return instantzia;
+	}
+
 	private void conOpen(String dbpath) {
 		try {
 			String url = "jdbc:sqlite:"+ dbpath ;
@@ -22,8 +35,6 @@ public class DBKudeatzaile {
 			System.err.println("Cannot connect to database server " + e);
 		}
 	}
-
-
 
 	private void conClose() {
 
@@ -50,19 +61,6 @@ public class DBKudeatzaile {
 		}
 
 		return rs;
-	}
-
-	// singleton patroia
-	private static DBKudeatzaile instantzia = new DBKudeatzaile();
-
-	private DBKudeatzaile()  {
-		String path = System.getProperty("user.home") + File.separatorChar + ".conecta4DB" + File.separatorChar + "conecta4DB.sqlite";
-		this.conOpen(path);
-
-	}
-
-	public static DBKudeatzaile getInstantzia() {
-		return instantzia;
 	}
 
 	public ResultSet execSQL(String query) {

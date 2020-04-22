@@ -1,10 +1,13 @@
-package ehu.pk.controller;
+package ehu.pk.model;
 
 import ehu.pk.controller.ui.MainKud;
 import ehu.pk.model.Tableroa;
+import ehu.pk.model.ZenbatAlboko;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
 
 public class IntelligentIA {
@@ -87,6 +90,7 @@ public class IntelligentIA {
         return emaitza;
     }
 
+    /*
     public static Point emanAukeraHoberena(Tableroa tableroa) {
 
         ArrayList<Point> aukeraGuztiak = emanAukeraGuztiak(tableroa);
@@ -97,25 +101,117 @@ public class IntelligentIA {
         for (Point aukera: aukeraGuztiak) {
             int erren = (int) aukera.getX();
             int zut = (int) aukera.getY();
-            if (tableroa.irabaziDu(erren,zut, "G"))
-                galdu = new Point(erren,zut);
 
-            tableroa.setFitxa(erren, zut, "IA");
-            if (tableroa.irabaziDu(erren,zut, "IA"))
-                irabazi = new Point(erren,zut);
+            if (tableroa.irabaziDu(erren,zut, "IA")) {
+                irabazi = new Point(erren, zut);
+                break;
+            }
+
+            else if (tableroa.irabaziDu(erren,zut, "G")) {
+                galdu = new Point(erren, zut);
+                break;
+            }
 
             if (tableroa.albokorenBatDauka(erren,zut,"IA"))
                 alboko = new Point(erren,zut);
         }
 
-        if(galdu != null)
+        if(irabazi != null)
             return galdu;
-        else if(irabazi !=null)
+        else if(galdu !=null)
             return irabazi;
         else if(alboko != null)
             return alboko;
         else
             return null;
+    } */
+
+    public static Point emanAukeraHoberena(Tableroa tableroa) {
+
+        ArrayList<Point> aukeraGuztiak = emanAukeraGuztiak(tableroa);
+        Point galdu = null;
+        Point irabazi = null;
+        Point egoeraBerezia = null;
+
+        HashMap<Point,ZenbatAlboko> albokoKop = new HashMap<>();
+
+        // Fitxa batekin irabazten duen konprobatu
+        for (Point aukera: aukeraGuztiak) {
+            int erren = (int) aukera.getX();
+            int zut = (int) aukera.getY();
+
+            if (tableroa.irabaziDu(erren,zut, "IA")) {
+                irabazi = new Point(erren, zut);
+                return irabazi;
+            }
+        }
+
+        // Fitxa batekin gal dezakeen konprobatu
+        for (Point aukera: aukeraGuztiak) {
+            int erren = (int) aukera.getX();
+            int zut = (int) aukera.getY();
+
+            if (tableroa.irabaziDu(erren,zut, "G")) {
+                galdu = new Point(erren, zut);
+                return galdu;
+            }
+        }
+
+        // Fitxa batekin egoera berezia gertatzen den konprobatu
+        for (Point aukera: aukeraGuztiak) {
+            int erren = (int) aukera.getX();
+            int zut = (int) aukera.getY();
+
+            if(tableroa.egoeraBereziaDago(erren,zut,"G") && !irabaztekoAukeraEman(erren,zut,tableroa)){
+                egoeraBerezia = new Point(erren, zut);
+                return egoeraBerezia;
+            }
+        }
+
+        // Albokoak bilatu
+        for (Point aukera: aukeraGuztiak) {
+            int erren = (int) aukera.getX();
+            int zut = (int) aukera.getY();
+
+            ZenbatAlboko albokoKopUnekoa = tableroa.albokorenBatDauka(erren,zut,"IA");
+            if(albokoKopUnekoa != null && !irabaztekoAukeraEman(erren,zut,tableroa)){
+                albokoKop.put(aukera,albokoKopUnekoa);
+            }
+        }
+
+        // Kasilla irabazle ez badago edo galtzea saihesten duena ez badago
+        // jokalariaren alboko fitxa gehien dituen aukera itzuli
+        Iterator<Point> itr = albokoKop.keySet().iterator();
+        int maxAlboko = 0;
+        Point maxAlbokoPoint = null;
+        while(itr.hasNext()){
+            Point unekoa = itr.next();
+            if(albokoKop.get(unekoa).getZenbat() == 2){
+                return unekoa;
+            }
+            else if(albokoKop.get(unekoa).getZenbat() > maxAlboko){
+                maxAlboko = albokoKop.get(unekoa).getZenbat();
+                maxAlbokoPoint = unekoa;
+            }
+        }
+        if(maxAlbokoPoint != null){
+            return  maxAlbokoPoint;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public static boolean irabaztekoAukeraEman(int pErrenkada, int pZutabea, Tableroa pTableroa){
+        Tableroa tableroaKopia = pTableroa.tableroaKopiatu();
+        tableroaKopia.setFitxa(pErrenkada,pZutabea,"IA");
+        ArrayList<Point> aukeraPosibleak = emanAukeraGuztiak(tableroaKopia);
+        for(int i=0; i<aukeraPosibleak.size(); i++){
+            if(tableroaKopia.irabaziDu((int)aukeraPosibleak.get(i).getX(),(int)aukeraPosibleak.get(i).getY(),"G")){
+                return  true;
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {

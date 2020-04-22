@@ -140,23 +140,24 @@ public class Main extends Application {
     stageTxikia.show();
   }
 
-  public void irabazleJokOrdErakutsi(long denbora){
+  public void irabazleJokOrdErakutsi(long denbora, int jokoModua){
     if(irabazleJokOrdScene == null){
       irabazleJokOrdScene = new Scene(irabazleJokOrdUI, 820, 510);
     }
     stageTxikia.setScene(irabazleJokOrdScene);
     stageTxikia.setTitle("IRABAZLEA");
     stageTxikia.show();
-    irabazleJokOrdKud.hasieratu(denbora);
+    irabazleJokOrdKud.hasieratu(denbora, jokoModua);
   }
 
-  public void galtzaileJokOrdErakutsi(){
+  public void galtzaileJokOrdErakutsi(int pModua){
     if(galtzaileJokOrdScene == null){
       galtzaileJokOrdScene = new Scene(galtzaileJokOrdUI, 500, 250);
     }
     stageTxikia.setScene(galtzaileJokOrdScene);
     stageTxikia.setTitle("GAME OVER");
     stageTxikia.show();
+    galtzaileJokOrdKud.hasieratu(pModua);
   }
 
   public void berdiketaErakutsi(int pModua){

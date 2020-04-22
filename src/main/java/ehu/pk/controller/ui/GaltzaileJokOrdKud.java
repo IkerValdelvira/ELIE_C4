@@ -20,6 +20,8 @@ public class GaltzaileJokOrdKud implements Initializable {
     @FXML
     private Button btnErrebantxa;
 
+    private int jokoModua;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -29,10 +31,14 @@ public class GaltzaileJokOrdKud implements Initializable {
         this.mainApp = main;
     }
 
+    public void hasieratu(int jokoModua){
+        this.jokoModua = jokoModua;
+    }
+
     @FXML
     public void onClickErrebantxa(ActionEvent actionEvent){
         mainApp.stageTxikiaClose();
-        mainApp.mainErakutsi(1);
+        mainApp.mainErakutsi(jokoModua);
     }
 
     @FXML

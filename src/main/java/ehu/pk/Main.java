@@ -23,6 +23,7 @@ public class Main extends Application {
   private Parent irabazleJokOrdUI;
   private Parent galtzaileJokOrdUI;
   private Parent berdinketaUI;
+  private Parent amaieraUI;
 
   private Stage stage;
   private Stage stageTxikia;
@@ -33,6 +34,7 @@ public class Main extends Application {
   private IrabazleJokOrdKud irabazleJokOrdKud;
   private GaltzaileJokOrdKud galtzaileJokOrdKud;
   private BerdinketaKud berdinketaKud;
+  private AmaieraKud amaieraKud;
 
   private Scene mainScene;
   private Scene sarreraScene;
@@ -40,6 +42,7 @@ public class Main extends Application {
   private Scene irabazleJokOrdScene;
   private Scene galtzaileJokOrdScene;
   private Scene berdinketaScene;
+  private Scene amaieraScene;
 
 
   @Override
@@ -112,6 +115,11 @@ public class Main extends Application {
     berdinketaKud = loaderBerdinketa.getController();
     berdinketaKud.setMainApp(this);
 
+    FXMLLoader loaderAmaiera = new FXMLLoader(getClass().getResource("/amaiera.fxml"));
+    amaieraUI = (Parent) loaderAmaiera.load();
+    amaieraKud = loaderAmaiera.getController();
+    amaieraKud.setMainApp(this);
+
   }
 
   public void mainErakutsi(int jokoModua){
@@ -144,6 +152,7 @@ public class Main extends Application {
     if(irabazleJokOrdScene == null){
       irabazleJokOrdScene = new Scene(irabazleJokOrdUI, 820, 510);
     }
+
     stageTxikia.setScene(irabazleJokOrdScene);
     stageTxikia.setTitle("IRABAZLEA");
     stageTxikia.show();
@@ -168,6 +177,18 @@ public class Main extends Application {
     stageTxikia.show();
     berdinketaKud.setModua(pModua);
   }
+  public void amaieraErakutsi(String emaitza, long denbora, int modua){
+    if(amaieraScene == null) {
+      amaieraScene = new Scene(amaieraUI, 500, 250);
+    }
+
+    stageTxikia.setScene(amaieraScene);
+    //stageTxikia.setTitle("IRABAZLEA");
+    stageTxikia.show();
+    amaieraKud.hasieratu(emaitza,denbora,modua);
+  }
+
+
 
   public void stageTxikiaClose(){
     stageTxikia.close();

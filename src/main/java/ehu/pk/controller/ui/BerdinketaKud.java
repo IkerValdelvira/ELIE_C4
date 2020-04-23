@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,6 +22,9 @@ public class BerdinketaKud implements Initializable {
     @FXML
     private Button btnErrebantxa;
 
+    @FXML
+    private ImageView imageView;
+
     private int modua;
 
     @Override
@@ -33,6 +38,8 @@ public class BerdinketaKud implements Initializable {
 
     public void setModua(int pModua){
         this.modua = modua;
+        Image image = new Image("pictures/berdinketa.gif");
+        imageView.setImage(image);
     }
 
     @FXML

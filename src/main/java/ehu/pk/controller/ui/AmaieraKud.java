@@ -13,7 +13,7 @@ import javafx.scene.image.ImageView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AmaieraJokJokKud implements Initializable {
+public class AmaieraKud implements Initializable {
 
     private Main mainApp;
 
@@ -29,6 +29,12 @@ public class AmaieraJokJokKud implements Initializable {
     @FXML
     private ImageView imageView;
 
+    @FXML
+    private Button buttonPuntuazioa;
+
+    private long denbora;
+    private int modua;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -38,22 +44,33 @@ public class AmaieraJokJokKud implements Initializable {
         this.mainApp = main;
     }
 
-    public void setIrabazlea(String pIrabazlea){
-        if("G".equals(pIrabazlea)){
-            lblIrabazlea.setText("JOKALARI GORRIAK irabazi du!!!");
+
+    public void hasieratu(String emaitza, long denbora, int modua){
+        this.denbora=denbora;
+        this.modua=modua;
+
+        if("irabazi".equals(emaitza)){
+            lblIrabazlea.setText("ZORIONAK, IRABAZI DUZU!");
+            Image image = new Image("pictures/win.gif");
+            imageView.setImage(image);
+            buttonPuntuazioa.setDisable(false);
+            btnErrebantxa.setText("Berriro jolastu");
+
         }
         else{
-            lblIrabazlea.setText("JOKALARI URDINAK irabazi du!!!");
-        }
-        Image image = new Image("pictures/win.gif");
-        imageView.setImage(image);
+            lblIrabazlea.setText("GALDU DUZU, SAIATU BERRIRO");
+            Image image = new Image("pictures/lose.gif");
+            imageView.setImage(image);
+            buttonPuntuazioa.setDisable(true);
+            btnErrebantxa.setText("Errebantxa");
 
+        }
     }
 
     @FXML
     public void onClickErrebantxa(ActionEvent actionEvent){
         mainApp.stageTxikiaClose();
-        mainApp.mainErakutsi(0);
+        mainApp.mainErakutsi(modua);
     }
 
     @FXML
@@ -62,4 +79,8 @@ public class AmaieraJokJokKud implements Initializable {
         mainApp.sarreraErakutsi();
     }
 
+    public void puntuazioaGorde(ActionEvent actionEvent) {
+        mainApp.stageTxikiaClose();
+        mainApp.irabazleJokOrdErakutsi(denbora);
+    }
 }

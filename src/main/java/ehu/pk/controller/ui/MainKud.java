@@ -295,9 +295,11 @@ public class MainKud implements Initializable {
                 if (jokoModua == 0) {
                     mainApp.amaieraJokJokErakutsi(txanda);
                 } else if ("G".equals(txanda)) {
-                    mainApp.irabazleJokOrdErakutsi(partidaDenbora);
+                    //mainApp.irabazleJokOrdErakutsi(partidaDenbora);
+                    mainApp.amaieraErakutsi("irabazi",partidaDenbora,jokoModua);
                 } else {
-                    mainApp.galtzaileJokOrdErakutsi();
+                    //mainApp.galtzaileJokOrdErakutsi();
+                    mainApp.amaieraErakutsi("galdu",0,jokoModua);
                 }
             });
             pauseIrabazlea.play();

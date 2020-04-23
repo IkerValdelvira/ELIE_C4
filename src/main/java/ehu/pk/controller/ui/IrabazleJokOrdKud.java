@@ -1,6 +1,7 @@
 package ehu.pk.controller.ui;
 
 import ehu.pk.Main;
+import ehu.pk.controller.db.RankingIntelligentIADBKud;
 import ehu.pk.controller.db.RankingRandomIADBKud;
 import ehu.pk.model.Emaitza;
 import javafx.collections.FXCollections;
@@ -56,6 +57,7 @@ public class IrabazleJokOrdKud implements Initializable {
 
     private int posizioa;
     private long denbora;
+    private int jokoModua;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -66,15 +68,21 @@ public class IrabazleJokOrdKud implements Initializable {
         this.mainApp = main;
     }
 
-    public void hasieratu(long denbora){
+    public void hasieratu(long denbora, int jokoModua){
         lblDenbora.setStyle("-fx-font-weight: bold;");
 
+        this.jokoModua = jokoModua;
         this.denbora = denbora;
         SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss.SSS");
         String denboraString = dateFormat.format(denbora);
         lblDenbora.setText(denboraString);
 
-        emaitzaModels = RankingRandomIADBKud.getInstantzia().rankingLortu();
+        if(jokoModua == 1){
+            emaitzaModels = RankingRandomIADBKud.getInstantzia().rankingLortu();
+        }
+        else{
+            emaitzaModels = RankingIntelligentIADBKud.getInstantzia().rankingLortu();
+        }
         posizioa = -1;
         for(int i=0; i<emaitzaModels.size(); i++){
             if(denbora < emaitzaModels.get(i).getDenbora()){
@@ -99,7 +107,6 @@ public class IrabazleJokOrdKud implements Initializable {
             btnIzenaGorde.setVisible(false);
         }
 
-        //colPosizioa.setCellValueFactory(new PropertyValueFactory<>("Posizioa"));
         colJokalaria.setCellValueFactory(new PropertyValueFactory<>("Jokalaria"));
         colDenbora.setCellValueFactory(new PropertyValueFactory<>("DenboraString"));
         colData.setCellValueFactory(new PropertyValueFactory<>("Data"));
@@ -130,7 +137,12 @@ public class IrabazleJokOrdKud implements Initializable {
     public void onClickIzenaGorde(ActionEvent actionEvent){
         Emaitza emaitza = new Emaitza(posizioa,tfIzenaSartu.getText(),denbora,new Timestamp(new Date().getTime()).toString());
         if(posizioa == emaitzaModels.size()+1 && emaitzaModels.size() < 10){
-            RankingRandomIADBKud.getInstantzia().emaitzaSartu(emaitza);
+            if(jokoModua == 1){
+                RankingRandomIADBKud.getInstantzia().emaitzaSartu(emaitza);
+            }
+            else{
+                RankingIntelligentIADBKud.getInstantzia().emaitzaSartu(emaitza);
+            }
             emaitzaModels.add(emaitza);
         }
         else{
@@ -153,8 +165,14 @@ public class IrabazleJokOrdKud implements Initializable {
             }
             emaitzaModels.clear();
             emaitzaModels.addAll(emaitzaModelsLag);
-            RankingRandomIADBKud.getInstantzia().emaitzakEzabatu();
-            RankingRandomIADBKud.getInstantzia().emaitzakSartu(emaitzaModels);
+            if(jokoModua == 1){
+                RankingRandomIADBKud.getInstantzia().emaitzakEzabatu();
+                RankingRandomIADBKud.getInstantzia().emaitzakSartu(emaitzaModels);
+            }
+            else{
+                RankingIntelligentIADBKud.getInstantzia().emaitzakEzabatu();
+                RankingIntelligentIADBKud.getInstantzia().emaitzakSartu(emaitzaModels);
+            }
             tfIzenaSartu.setVisible(false);
             btnIzenaGorde.setVisible(false);
             lblMezua.setText("Zure izena ranking-ean erregistratu da!!!");
@@ -164,7 +182,7 @@ public class IrabazleJokOrdKud implements Initializable {
     @FXML
     public void onClickErrebantxa(ActionEvent actionEvent){
         mainApp.stageTxikiaClose();
-        mainApp.mainErakutsi(1);
+        mainApp.mainErakutsi(jokoModua);
     }
 
     @FXML

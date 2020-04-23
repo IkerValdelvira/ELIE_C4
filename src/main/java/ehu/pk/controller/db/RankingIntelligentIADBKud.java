@@ -8,28 +8,28 @@ import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class RankingRandomIADBKud {
+public class RankingIntelligentIADBKud {
 
     //singleton patroia
 
-    private static RankingRandomIADBKud instantzia = new RankingRandomIADBKud();
+    private static RankingIntelligentIADBKud instantzia = new RankingIntelligentIADBKud();
 
-    public static RankingRandomIADBKud getInstantzia(){
+    public static RankingIntelligentIADBKud getInstantzia(){
         return instantzia;
     }
 
-    private RankingRandomIADBKud() {}
+    private RankingIntelligentIADBKud() {}
 
     public void emaitzaSartu(Emaitza pEmaitza) {
         //Declare a INSERT statement
-        String insertStmt = "INSERT INTO RankingRandomIA VALUES('" + pEmaitza.getPosizioa() + "','" + pEmaitza.getJokalaria() + "','" + pEmaitza.getDenbora() + "','" + pEmaitza.getData() + "');";
+        String insertStmt = "INSERT INTO RankingIntelligentIA VALUES('" + pEmaitza.getPosizioa() + "','" + pEmaitza.getJokalaria() + "','" + pEmaitza.getDenbora() + "','" + pEmaitza.getData() + "');";
         DBKudeatzaile.getInstantzia().execSQL(insertStmt);
     }
 
     public void emaitzakSartu(ObservableList<Emaitza> pEmaitzak) {
         for(Emaitza unekoa : pEmaitzak){
             //Declare a INSERT statement
-            String insertStmt = "INSERT INTO RankingRandomIA VALUES('" + unekoa.getPosizioa() + "','" + unekoa.getJokalaria() + "','" + unekoa.getDenbora() + "','" + unekoa.getData() + "');";
+            String insertStmt = "INSERT INTO RankingIntelligentIA VALUES('" + unekoa.getPosizioa() + "','" + unekoa.getJokalaria() + "','" + unekoa.getDenbora() + "','" + unekoa.getData() + "');";
             DBKudeatzaile.getInstantzia().execSQL(insertStmt);
         }
     }
@@ -39,7 +39,7 @@ public class RankingRandomIADBKud {
         try {
 
             //Declare a SELECT statement
-            String selectStmt = "SELECT * FROM RankingRandomIA";
+            String selectStmt = "SELECT * FROM RankingIntelligentIA";
 
             ResultSet rs = DBKudeatzaile.getInstantzia().execSQL(selectStmt);
 
@@ -64,7 +64,7 @@ public class RankingRandomIADBKud {
 
     public void emaitzakEzabatu() {
         //Declare a DELETE statement
-        String statement = "DELETE FROM RankingRandomIA;";
+        String statement = "DELETE FROM RankingIntelligentIA;";
         DBKudeatzaile.getInstantzia().execSQL(statement);
     }
 

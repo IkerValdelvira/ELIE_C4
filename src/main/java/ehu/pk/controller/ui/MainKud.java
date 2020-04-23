@@ -1,7 +1,7 @@
 package ehu.pk.controller.ui;
 
 import ehu.pk.Main;
-import ehu.pk.controller.IntelligentIA;
+import ehu.pk.model.IntelligentIA;
 import ehu.pk.model.Tableroa;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
@@ -10,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,7 +20,6 @@ import java.awt.*;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 public class MainKud implements Initializable {
 
@@ -295,10 +293,8 @@ public class MainKud implements Initializable {
                 if (jokoModua == 0) {
                     mainApp.amaieraJokJokErakutsi(txanda);
                 } else if ("G".equals(txanda)) {
-                    //mainApp.irabazleJokOrdErakutsi(partidaDenbora);
                     mainApp.amaieraErakutsi("irabazi",partidaDenbora,jokoModua);
                 } else {
-                    //mainApp.galtzaileJokOrdErakutsi();
                     mainApp.amaieraErakutsi("galdu",0,jokoModua);
                 }
             });
@@ -325,9 +321,9 @@ public class MainKud implements Initializable {
                         PauseTransition pauseIntelligentIA = new PauseTransition(Duration.seconds(2));
                         pauseIntelligentIA.setOnFinished(event -> {
                             intelligentIA();
+                            this.setButtonsDisable(false);
                         });
                         pauseIntelligentIA.play();
-                        this.setButtonsDisable(false);
                         break;
                 }
             } else {

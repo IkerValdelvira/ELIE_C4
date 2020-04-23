@@ -81,6 +81,6 @@ public class AmaieraKud implements Initializable {
 
     public void puntuazioaGorde(ActionEvent actionEvent) {
         mainApp.stageTxikiaClose();
-        mainApp.irabazleJokOrdErakutsi(denbora);
+        mainApp.irabazleJokOrdErakutsi(denbora,modua);
     }
 }

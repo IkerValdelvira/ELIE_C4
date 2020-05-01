@@ -4,5 +4,5 @@ open module scenebuilder {
   requires javafx.fxml;
   requires java.sql;
   requires java.desktop;
-  exports ehu.pk;
+    exports ehu.pk;
 }

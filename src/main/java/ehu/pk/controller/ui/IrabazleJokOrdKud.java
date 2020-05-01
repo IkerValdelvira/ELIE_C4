@@ -136,6 +136,7 @@ public class IrabazleJokOrdKud implements Initializable {
     @FXML
     public void onClickIzenaGorde(ActionEvent actionEvent){
         Emaitza emaitza = new Emaitza(posizioa,tfIzenaSartu.getText(),denbora,new Timestamp(new Date().getTime()).toString());
+        // Ranking-a ez dago beteta eta uneko emaitza libre dagoen azken posizioan kokatzen da
         if(posizioa == emaitzaModels.size()+1 && emaitzaModels.size() < 10){
             if(jokoModua == 1){
                 RankingRandomIADBKud.getInstantzia().emaitzaSartu(emaitza);
@@ -151,12 +152,14 @@ public class IrabazleJokOrdKud implements Initializable {
                 emaitzaModelsLag.add(emaitzaModels.get(i-1));
             }
             emaitzaModelsLag.add(emaitza);
+            // Ranking-a ez dago beteta eta uneko emaitza azkena ez den posizio batean kokatzen da
             if(emaitzaModels.size()<10){
                 for(int i=emaitzaModelsLag.size(); i<=emaitzaModels.size(); i++) {
                     emaitzaModels.get(i-1).setPosizioa(emaitzaModels.get(i-1).getPosizioa()+1);
                     emaitzaModelsLag.add(emaitzaModels.get(i-1));
                 }
             }
+            // Ranking-a beteta dago
             else{
                 for(int i=emaitzaModelsLag.size(); i<10; i++) {
                     emaitzaModels.get(i-1).setPosizioa(emaitzaModels.get(i-1).getPosizioa()+1);

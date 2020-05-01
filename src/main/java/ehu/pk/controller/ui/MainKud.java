@@ -268,7 +268,7 @@ public class MainKud implements Initializable {
                 taJokaldiak.appendText("\nIA-ren txanda...");
             }
         } else if (jokoModua == 0) {
-            tableroa.setFitxa(pErrenkada, pZutabea, "H");
+            tableroa.setFitxa(pErrenkada, pZutabea, "U");
             image = new Image("pictures/FitxaUrdina.png");
             taJokaldiak.appendText("\nUrdina: [" + (pErrenkada + 1) + "," + (pZutabea + 1) + "] posizioan fitxa kokatu du.\n");
             taJokaldiak.appendText("\nJokalari GORRIAren txanda...");
@@ -303,7 +303,7 @@ public class MainKud implements Initializable {
             if ("G".equals(txanda)) {
                 switch (jokoModua) {
                     case 0:
-                        txanda = "H";
+                        txanda = "U";
                         break;
                     case 1:
                         txanda = "IA";
@@ -412,7 +412,7 @@ public class MainKud implements Initializable {
             }
         }
         botoienKoloreaAldatu();
-
+        berdinetaKonprobatu();
     }
 
     public void intelligentIA() {
@@ -474,6 +474,7 @@ public class MainKud implements Initializable {
                 }
             }
             botoienKoloreaAldatu();
+            berdinetaKonprobatu();
         }
 
     }

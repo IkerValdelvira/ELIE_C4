@@ -1,10 +1,5 @@
 package ehu.pk.model;
 
-import javafx.geometry.HPos;
-import javafx.geometry.Pos;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 public class Tableroa {
 
     private String[][] tableroa;
@@ -694,7 +689,7 @@ public class Tableroa {
 
     public boolean egoeraBereziaDago(int erren, int zut, String pJokalaria) {
         if(zut > 0 && zut < tableroa[0].length-1){
-            // ... [UNEKOA] [JOK] [JOK] [LIBRE] ...
+            // ... [LIBRE] [UNEKOA] [JOK] [JOK] [LIBRE] ...
             if("Z".equals(tableroa[erren][zut-1]) && (erren == tableroa.length-1 || !"Z".equals(tableroa[erren+1][zut-1]))){
                 if(zut <= 5
                         && pJokalaria.equals(tableroa[erren][zut+1])
@@ -704,7 +699,7 @@ public class Tableroa {
                     return true;
                 }
             }
-            // ... [LIBRE] [JOK] [JOK] [UNEKOA] ...
+            // ... [LIBRE] [JOK] [JOK] [UNEKOA] [LIBRE] ...
             else if("Z".equals(tableroa[erren][zut+1]) && (erren == tableroa.length-1 || !"Z".equals(tableroa[erren+1][zut+1]))){
                 if(zut >= 3
                         && pJokalaria.equals(tableroa[erren][zut-1])

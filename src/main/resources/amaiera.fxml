@@ -54,7 +54,7 @@
          <children>
             <Button fx:id="btnItzuli" mnemonicParsing="false" onAction="#onClickItzuli" prefHeight="26.0" prefWidth="170.0" text="Leiho nagusira itzuli" />
             <Button fx:id="btnErrebantxa" mnemonicParsing="false" onAction="#onClickErrebantxa" prefHeight="26.0" prefWidth="132.0" text="Errebantxa" />
-            <Button fx:id="buttonPuntuazioa" mnemonicParsing="false" onAction="#puntuazioaGorde" text="Puntuazioa gorde" />
+            <Button fx:id="buttonPuntuazioa" mnemonicParsing="false" onAction="#onClickPuntuazioaGorde" text="Puntuazioa gorde" />
          </children>
       </HBox>
    </bottom>

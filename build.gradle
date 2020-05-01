@@ -33,7 +33,10 @@ dependencies {
     implementation 'com.google.guava:guava:27.0.1-jre'
 
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
+    //testImplementation 'junit:junit:4.12'
+
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+    //testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.0-M1'
 
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.11'

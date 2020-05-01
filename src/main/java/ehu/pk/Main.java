@@ -21,7 +21,6 @@ public class Main extends Application {
   private Parent sarreraUI;
   private Parent amaieraJokJokUI;
   private Parent irabazleJokOrdUI;
-  private Parent galtzaileJokOrdUI;
   private Parent berdinketaUI;
   private Parent amaieraUI;
 
@@ -32,7 +31,6 @@ public class Main extends Application {
   private SarreraKud sarreraKud;
   private AmaieraJokJokKud amaieraJokJokKud;
   private IrabazleJokOrdKud irabazleJokOrdKud;
-  private GaltzaileJokOrdKud galtzaileJokOrdKud;
   private BerdinketaKud berdinketaKud;
   private AmaieraKud amaieraKud;
 
@@ -40,7 +38,6 @@ public class Main extends Application {
   private Scene sarreraScene;
   private Scene amaieraJokJokScene;
   private Scene irabazleJokOrdScene;
-  private Scene galtzaileJokOrdScene;
   private Scene berdinketaScene;
   private Scene amaieraScene;
 
@@ -105,11 +102,6 @@ public class Main extends Application {
     amaieraJokJokKud = loaderAmaieraJokJok.getController();
     amaieraJokJokKud.setMainApp(this);
 
-    FXMLLoader loaderGaltzaileJokOrd = new FXMLLoader(getClass().getResource("/galtzaileJokOrd.fxml"));
-    galtzaileJokOrdUI = (Parent) loaderGaltzaileJokOrd.load();
-    galtzaileJokOrdKud = loaderGaltzaileJokOrd.getController();
-    galtzaileJokOrdKud.setMainApp(this);
-
     FXMLLoader loaderBerdinketa = new FXMLLoader(getClass().getResource("/berdinketa.fxml"));
     berdinketaUI = (Parent) loaderBerdinketa.load();
     berdinketaKud = loaderBerdinketa.getController();
@@ -157,16 +149,6 @@ public class Main extends Application {
     stageTxikia.setTitle("IRABAZLEA");
     stageTxikia.show();
     irabazleJokOrdKud.hasieratu(denbora, jokoModua);
-  }
-
-  public void galtzaileJokOrdErakutsi(int pModua){
-    if(galtzaileJokOrdScene == null){
-      galtzaileJokOrdScene = new Scene(galtzaileJokOrdUI, 500, 250);
-    }
-    stageTxikia.setScene(galtzaileJokOrdScene);
-    stageTxikia.setTitle("GAME OVER");
-    stageTxikia.show();
-    galtzaileJokOrdKud.hasieratu(pModua);
   }
 
   public void berdiketaErakutsi(int pModua){

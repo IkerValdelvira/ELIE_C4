@@ -1,7 +1,7 @@
 package ehu.pk.model;
 
 public class ZenbatAlboko {
-    private String posizioa;
+    private String posizioa; // Behean, Horizontalean, DiagonaleanEzkerra, DiagonaleanEskuina
     private int zenbat;
 
     public ZenbatAlboko(String posizioa, int zenbat) {

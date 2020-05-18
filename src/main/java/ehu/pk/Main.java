@@ -10,7 +10,9 @@ import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -71,10 +73,11 @@ public class Main extends Application {
       directory.mkdir();
       try {
         source = Paths.get(getClass().getClassLoader().getResource("conecta4DB.sqlite").toURI());
+        //source = Paths.get(new File("conecta4DB.sqlite").toURI());
         destination = Paths.get(path);
         Files.copy(source, destination);
 
-      } catch (URISyntaxException | IOException e) {
+      } catch (IOException | URISyntaxException e) {
         e.printStackTrace();
       }
     }
@@ -132,7 +135,7 @@ public class Main extends Application {
 
   public void amaieraJokJokErakutsi(String pIrabazlea){
     if(amaieraJokJokScene == null){
-      amaieraJokJokScene = new Scene(amaieraJokJokUI, 500, 250);
+      amaieraJokJokScene = new Scene(amaieraJokJokUI, 500, 270);
     }
     stageTxikia.setScene(amaieraJokJokScene);
     stageTxikia.setTitle("IRABAZLEA");
@@ -142,7 +145,7 @@ public class Main extends Application {
 
   public void irabazleJokOrdErakutsi(long denbora, int jokoModua){
     if(irabazleJokOrdScene == null){
-      irabazleJokOrdScene = new Scene(irabazleJokOrdUI, 820, 510);
+      irabazleJokOrdScene = new Scene(irabazleJokOrdUI, 820, 505);
     }
 
     stageTxikia.setScene(irabazleJokOrdScene);
@@ -153,7 +156,7 @@ public class Main extends Application {
 
   public void berdiketaErakutsi(int pModua){
     if(berdinketaScene == null){
-      berdinketaScene = new Scene(berdinketaUI, 500, 250);
+      berdinketaScene = new Scene(berdinketaUI, 500, 260);
     }
     stageTxikia.setScene(berdinketaScene);
     stageTxikia.setTitle("BERDINKETA");
@@ -162,16 +165,17 @@ public class Main extends Application {
   }
   public void amaieraErakutsi(String emaitza, long denbora, int modua){
     if(amaieraScene == null) {
-      amaieraScene = new Scene(amaieraUI, 500, 250);
+      amaieraScene = new Scene(amaieraUI, 500, 270);
     }
 
     stageTxikia.setScene(amaieraScene);
-    //stageTxikia.setTitle("IRABAZLEA");
     stageTxikia.show();
     amaieraKud.hasieratu(emaitza,denbora,modua);
   }
 
-
+  public void close(){
+    stage.close();
+  }
 
   public void stageTxikiaClose(){
     stageTxikia.close();

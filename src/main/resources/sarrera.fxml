@@ -7,44 +7,40 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="247.0" prefWidth="599.0" styleClass="background" stylesheets="@styles/bootstrap3.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.pk.controller.ui.SarreraKud">
+<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="247.0" prefWidth="599.0" styleClass="theme" stylesheets="@styles/bootstrap3.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.pk.controller.ui.SarreraKud">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Aukerak">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem fx:id="btnItxi" mnemonicParsing="false" onAction="#onClickItxi" text="Itxi" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" text="Laguntza">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" text="Conecta4 buruz..." />
             </items>
           </Menu>
         </menus>
       </MenuBar>
    </top>
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="vbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="ONGI ETORRI CONECTA 4 JOKORA">
                <font>
                   <Font name="Chilanka Regular" size="24.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                <children>
-                  <VBox prefHeight="100.0" prefWidth="251.0" />
+                  <ImageView fx:id="ivLogoa" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                   <VBox prefHeight="108.0" prefWidth="280.0">
                      <children>
                         <VBox alignment="CENTER" prefHeight="88.0" prefWidth="332.0" spacing="10.0">
@@ -55,7 +51,7 @@
                                     <Insets />
                                  </VBox.margin>
                               </ComboBox>
-                              <Button fx:id="btnHasi" mnemonicParsing="false" onAction="#onClickHasi" prefHeight="26.0" prefWidth="91.0" text="HASI" />
+                              <Button fx:id="btnHasi" mnemonicParsing="false" onAction="#onClickHasi" prefHeight="26.0" prefWidth="91.0" stylesheets="@styles/bootstrap3.css" text="HASI" />
                            </children>
                            <VBox.margin>
                               <Insets top="20.0" />
@@ -69,10 +65,13 @@
       </VBox>
    </center>
    <bottom>
-      <Label text="By ELIE: Ekaitz Hurtado, Lander Echevarria, Iker Valdelvira, Endika Tapia" BorderPane.alignment="CENTER">
+      <HBox fx:id="hbox" alignment="CENTER" prefHeight="22.0" prefWidth="599.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="By ELIE: Ekaitz Hurtado, Lander Echevarria, Iker Valdelvira, Endika Tapia" />
+         </children>
          <BorderPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            <Insets />
          </BorderPane.margin>
-      </Label>
+      </HBox>
    </bottom>
    </BorderPane>

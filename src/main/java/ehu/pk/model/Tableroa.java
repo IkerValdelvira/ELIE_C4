@@ -143,56 +143,6 @@ public class Tableroa {
         return irabazi;
     }
 
-    public Boolean irabaziDuJokalariak(String jokalaria) {
-        Boolean irabaziDu = false;
-        for (int erren = 1; erren < tableroa.length + 1; erren++) {  // Errenkada
-            for (int zut = 0; zut < tableroa[0].length; zut++) {     // Zutabe
-                if (irabaziDu(erren,zut,jokalaria)) {
-                    irabaziDu = true;
-                    break;
-                }
-            }
-        }
-
-        return irabaziDu;
-    }
-
-    /*
-    public boolean albokorenBatDauka(int errenkada, int zutabe, String jokalari) {
-
-        if (errenkada < 5) {
-            if (jokalari.equals(tableroa[errenkada+1][zutabe])) // Behean
-                return true;
-        }
-        else if (errenkada > 1) {
-            if (jokalari.equals(tableroa[errenkada-1][zutabe])) // Goian
-                return true;
-        }
-        else if (zutabe < 0) {
-            if (jokalari.equals(tableroa[errenkada][zutabe+1])) // Ezkerrean
-                return true;
-        }
-        else if (zutabe < 8) {
-            if (jokalari.equals(tableroa[errenkada][zutabe+1])) // Eskuinean
-                return true;
-        }
-
-        else if ((0 < zutabe) && ( zutabe < 8) && (1 < errenkada) && (errenkada < 5)) {
-            if (jokalari.equals(tableroa[errenkada+1][zutabe-1])) // Behean ezkerrean
-                return true;
-            else if (jokalari.equals(tableroa[errenkada+1][zutabe+1])) // Behean eskuinean
-                return true;
-            else if (jokalari.equals(tableroa[errenkada-1][zutabe-1])) // Goian ezkerrean
-                return true;
-            else if (jokalari.equals(tableroa[errenkada-1][zutabe+1])) // Goian eskuinean
-                return true;
-        }
-
-        return false;
-
-    }
-    */
-
     public ZenbatAlboko albokorenBatDauka(int pErrenkada, int pZutabea, String pJokalari) {
         int[] zenbatAlboan = new int[4];
         zenbatAlboan[0] = zenbatBehean(pErrenkada,pZutabea,pJokalari);

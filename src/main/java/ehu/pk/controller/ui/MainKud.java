@@ -14,6 +14,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.awt.*;
@@ -58,6 +59,9 @@ public class MainKud implements Initializable {
     @FXML
     private TextArea taJokaldiak;
 
+    @FXML
+    private VBox vbox;
+
     private Tableroa tableroa;
     private Boolean[] zutabeBetetak;
     private String txanda;
@@ -67,7 +71,9 @@ public class MainKud implements Initializable {
     private long partidaDenbora;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {}
+    public void initialize(URL location, ResourceBundle resources) {
+        vbox.setStyle("-fx-background-color: rgba(217,217,217,0.64);");
+    }
 
     public void hasieratu(){
         setButtonsDisable(false);
@@ -476,7 +482,31 @@ public class MainKud implements Initializable {
             botoienKoloreaAldatu();
             berdinetaKonprobatu();
         }
+    }
 
+    @FXML
+    public void onClickItxi(ActionEvent actionEvent){
+        mainApp.close();
+    }
+
+    @FXML
+    public void onClickJokvsJok(ActionEvent actionEvent){
+        mainApp.mainErakutsi(0);
+    }
+
+    @FXML
+    public void onClickJokvsOrd(ActionEvent actionEvent){
+        mainApp.mainErakutsi(1);
+    }
+
+    @FXML
+    public void onClickJokvsOrdAdimendua(ActionEvent actionEvent){
+        mainApp.mainErakutsi(2);
+    }
+
+    @FXML
+    public void onClickBerrabiarazi(ActionEvent actionEvent){
+        hasieratu();
     }
 
 }

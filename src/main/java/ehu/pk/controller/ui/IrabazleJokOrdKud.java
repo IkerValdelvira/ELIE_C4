@@ -14,6 +14,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -53,6 +55,12 @@ public class IrabazleJokOrdKud implements Initializable {
     @FXML
     private TableColumn<Emaitza, Date> colData;
 
+    @FXML
+    private VBox vbox;
+
+    @FXML
+    private HBox hbox;
+
     private ObservableList<Emaitza> emaitzaModels = FXCollections.observableArrayList();
 
     private int posizioa;
@@ -61,7 +69,8 @@ public class IrabazleJokOrdKud implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        vbox.setStyle("-fx-background-color: rgba(217,217,217,0.64);");
+        hbox.setStyle("-fx-background-color: rgba(217,217,217,0.64);");
     }
 
     public void setMainApp(Main main) {
@@ -92,12 +101,12 @@ public class IrabazleJokOrdKud implements Initializable {
         }
         if(posizioa == -1 && emaitzaModels.size() < 10){
             posizioa = emaitzaModels.size()+1;
-            lblMezua.setText("10 jokalari onenen " + (posizioa) + " posizioan ranking-ean sar zaitezke!!! Izena eman:");
+            lblMezua.setText("10 jokalari onenen " + (posizioa) + " posizioan ranking-ean sar zaitezke!!!    Izena eman:");
             tfIzenaSartu.setVisible(true);
             btnIzenaGorde.setVisible(true);
         }
         else if(posizioa != -1){
-            lblMezua.setText("10 jokalari onenen " + (posizioa) + " posizioan ranking-ean sar zaitezke!!! Izena eman:");
+            lblMezua.setText("10 jokalari onenen " + (posizioa) + " posizioan ranking-ean sar zaitezke!!!    Izena eman:");
             tfIzenaSartu.setVisible(true);
             btnIzenaGorde.setVisible(true);
         }
@@ -192,6 +201,36 @@ public class IrabazleJokOrdKud implements Initializable {
     public void onClickItzuli(ActionEvent actionEvent){
         mainApp.stageTxikiaClose();
         mainApp.sarreraErakutsi();
+    }
+
+    @FXML
+    public void onClickItxi(ActionEvent actionEvent){
+        mainApp.close();
+        mainApp.stageTxikiaClose();
+    }
+
+    @FXML
+    public void onClickBerrabiarazi(ActionEvent actionEvent){
+        mainApp.mainErakutsi(this.jokoModua);
+        mainApp.stageTxikiaClose();
+    }
+
+    @FXML
+    public void onClickJokvsJok(ActionEvent actionEvent){
+        mainApp.mainErakutsi(0);
+        mainApp.stageTxikiaClose();
+    }
+
+    @FXML
+    public void onClickJokvsOrd(ActionEvent actionEvent){
+        mainApp.mainErakutsi(1);
+        mainApp.stageTxikiaClose();
+    }
+
+    @FXML
+    public void onClickJokvsOrdAdimendua(ActionEvent actionEvent){
+        mainApp.mainErakutsi(2);
+        mainApp.stageTxikiaClose();
     }
 
 }

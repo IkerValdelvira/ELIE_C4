@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -18,26 +19,30 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Aukerak">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" onAction="#onClickBerrabiarazi" text="Partida berrabiarazi" />
+                  <Menu mnemonicParsing="false" text="Joko modua aldatu...">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#onClickJokvsJok" text="Jokalari vs Jokalari" />
+                        <MenuItem mnemonicParsing="false" onAction="#onClickJokvsOrd" text="Jokalari vs Ordenagailu" />
+                        <MenuItem mnemonicParsing="false" onAction="#onClickJokvsOrdAdimendua" text="Jokalari vs Ordenagailu Adimendua" />
+                    </items>
+                  </Menu>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#onClickItxi" text="Itxi" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" text="Laguntza">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" text="Conecta4 buruz..." />
             </items>
           </Menu>
         </menus>
       </MenuBar>
    </top>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="45.0" prefWidth="599.0" spacing="20.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="hbox" alignment="CENTER" prefHeight="51.0" prefWidth="515.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnItzuli" mnemonicParsing="false" onAction="#onClickItzuli" prefHeight="26.0" prefWidth="170.0" text="Leiho nagusira itzuli" />
             <Button fx:id="btnErrebantxa" mnemonicParsing="false" onAction="#onClickErrebantxa" prefHeight="26.0" prefWidth="170.0" text="Errebantxa" />
@@ -45,7 +50,7 @@
       </HBox>
    </bottom>
    <center>
-      <VBox alignment="TOP_CENTER" prefHeight="390.0" prefWidth="515.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="vbox" alignment="TOP_CENTER" prefHeight="390.0" prefWidth="515.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <Label prefHeight="15.0" prefWidth="379.0" text="ZORIONAK!!! IRABAZI DUZU!!!">
                <font>

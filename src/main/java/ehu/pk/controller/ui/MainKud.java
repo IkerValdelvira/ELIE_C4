@@ -1,7 +1,7 @@
 package ehu.pk.controller.ui;
 
 import ehu.pk.Main;
-import ehu.pk.controller.IntelligentIA;
+import ehu.pk.model.IntelligentIA;
 import ehu.pk.model.Tableroa;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
@@ -10,18 +10,17 @@ import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.awt.*;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 public class MainKud implements Initializable {
 
@@ -60,6 +59,9 @@ public class MainKud implements Initializable {
     @FXML
     private TextArea taJokaldiak;
 
+    @FXML
+    private VBox vbox;
+
     private Tableroa tableroa;
     private Boolean[] zutabeBetetak;
     private String txanda;
@@ -69,7 +71,9 @@ public class MainKud implements Initializable {
     private long partidaDenbora;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {}
+    public void initialize(URL location, ResourceBundle resources) {
+        vbox.setStyle("-fx-background-color: rgba(217,217,217,0.64);");
+    }
 
     public void hasieratu(){
         setButtonsDisable(false);
@@ -270,7 +274,7 @@ public class MainKud implements Initializable {
                 taJokaldiak.appendText("\nIA-ren txanda...");
             }
         } else if (jokoModua == 0) {
-            tableroa.setFitxa(pErrenkada, pZutabea, "H");
+            tableroa.setFitxa(pErrenkada, pZutabea, "U");
             image = new Image("pictures/FitxaUrdina.png");
             taJokaldiak.appendText("\nUrdina: [" + (pErrenkada + 1) + "," + (pZutabea + 1) + "] posizioan fitxa kokatu du.\n");
             taJokaldiak.appendText("\nJokalari GORRIAren txanda...");
@@ -295,9 +299,9 @@ public class MainKud implements Initializable {
                 if (jokoModua == 0) {
                     mainApp.amaieraJokJokErakutsi(txanda);
                 } else if ("G".equals(txanda)) {
-                    mainApp.irabazleJokOrdErakutsi(partidaDenbora);
+                    mainApp.amaieraErakutsi("irabazi",partidaDenbora,jokoModua);
                 } else {
-                    mainApp.galtzaileJokOrdErakutsi();
+                    mainApp.amaieraErakutsi("galdu",0,jokoModua);
                 }
             });
             pauseIrabazlea.play();
@@ -305,7 +309,7 @@ public class MainKud implements Initializable {
             if ("G".equals(txanda)) {
                 switch (jokoModua) {
                     case 0:
-                        txanda = "H";
+                        txanda = "U";
                         break;
                     case 1:
                         txanda = "IA";
@@ -323,9 +327,9 @@ public class MainKud implements Initializable {
                         PauseTransition pauseIntelligentIA = new PauseTransition(Duration.seconds(2));
                         pauseIntelligentIA.setOnFinished(event -> {
                             intelligentIA();
+                            this.setButtonsDisable(false);
                         });
                         pauseIntelligentIA.play();
-                        this.setButtonsDisable(false);
                         break;
                 }
             } else {
@@ -414,7 +418,7 @@ public class MainKud implements Initializable {
             }
         }
         botoienKoloreaAldatu();
-
+        berdinetaKonprobatu();
     }
 
     public void intelligentIA() {
@@ -476,8 +480,33 @@ public class MainKud implements Initializable {
                 }
             }
             botoienKoloreaAldatu();
+            berdinetaKonprobatu();
         }
+    }
 
+    @FXML
+    public void onClickItxi(ActionEvent actionEvent){
+        mainApp.close();
+    }
+
+    @FXML
+    public void onClickJokvsJok(ActionEvent actionEvent){
+        mainApp.mainErakutsi(0);
+    }
+
+    @FXML
+    public void onClickJokvsOrd(ActionEvent actionEvent){
+        mainApp.mainErakutsi(1);
+    }
+
+    @FXML
+    public void onClickJokvsOrdAdimendua(ActionEvent actionEvent){
+        mainApp.mainErakutsi(2);
+    }
+
+    @FXML
+    public void onClickBerrabiarazi(ActionEvent actionEvent){
+        hasieratu();
     }
 
 }

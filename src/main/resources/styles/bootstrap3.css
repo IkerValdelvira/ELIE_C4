@@ -7,7 +7,7 @@
 .number-button:focused,
 .combo-box:focused .text-field, .choice-box:focused, .color-picker:focused, .date-picker:focused .text-field
 {
-	-fx-effect: dropshadow(gaussian, #b4d1f3, 3, 3, 0, 0);
+	-fx-effect: dropshadow(gaussian, #b4d1f3, 4, 3, 0, 0);
 }
 .combo-box:focused * {
 	-fx-effect: none;
@@ -155,7 +155,7 @@ VBox > .split-menu-button.last > .arrow-button {
 .number-button,.left-arrow-button,.right-arrow-button,
 .button,.split-menu-button,.toggle-button,.menu-button,
 .font-menu-button, .split-menu-button > .label, .split-menu-button > .arrow-button {
-	-fx-background-color: white;
+
 }
 
 .color-picker,.date-picker > .arrow-button,
@@ -573,7 +573,7 @@ VBox > .split-menu-button.last > .arrow-button {
 }
 
 .menu-bar {
-	-fx-background-color: white;
+	-fx-background-color: rgba(188, 195, 196, 0.64);
 }
 .menu-bar > .container > .menu-button {
 	-fx-background-radius: 0;
@@ -933,3 +933,14 @@ VBox > .split-menu-button.last > .arrow-button {
 	-fx-alignment: CENTER;
 	-fx-font-size: 1em;
 }
+
+.button {
+	-fx-background-color: #cbcbcb;
+	-fx-border-color: black;
+}
+
+.combo-box {
+	-fx-background-color: #cbcbcb;
+	-fx-border-color: black;
+}
+

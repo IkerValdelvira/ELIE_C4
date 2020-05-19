@@ -14,9 +14,12 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class BerdinketaKud implements Initializable {
+public class AmaieraKud implements Initializable {
 
     private Main mainApp;
+
+    @FXML
+    private Label lblIrabazlea;
 
     @FXML
     private Button btnItzuli;
@@ -28,17 +31,19 @@ public class BerdinketaKud implements Initializable {
     private ImageView imageView;
 
     @FXML
+    private Button buttonRanking;
+
+    @FXML
     private VBox vbox;
 
     @FXML
     private HBox hbox;
 
-
+    private long denbora;
     private int modua;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        vbox.setStyle("-fx-background-color: rgba(217,217,217,0.64);");
         hbox.setStyle("-fx-background-color: rgba(217,217,217,0.64);");
     }
 
@@ -46,10 +51,29 @@ public class BerdinketaKud implements Initializable {
         this.mainApp = main;
     }
 
-    public void setModua(int pModua){
-        this.modua = modua;
-        Image image = new Image("pictures/berdinketa.gif");
-        imageView.setImage(image);
+
+    public void hasieratu(String emaitza, long denbora, int modua){
+        this.denbora=denbora;
+        this.modua=modua;
+
+        if("irabazi".equals(emaitza)){
+            vbox.setStyle("-fx-background-color: #f1afaf");
+            lblIrabazlea.setText("ZORIONAK, IRABAZI DUZU!");
+            Image image = new Image("pictures/win.gif");
+            imageView.setImage(image);
+            buttonRanking.setDisable(false);
+            btnErrebantxa.setText("Berriro jolastu");
+
+        }
+        else{
+            vbox.setStyle("-fx-background-color: #b8dbe8");
+            lblIrabazlea.setText("GALDU DUZU, SAIATU BERRIRO");
+            Image image = new Image("pictures/lose.gif");
+            imageView.setImage(image);
+            buttonRanking.setDisable(true);
+            btnErrebantxa.setText("Errebantxa");
+
+        }
     }
 
     @FXML
@@ -64,34 +88,33 @@ public class BerdinketaKud implements Initializable {
         mainApp.sarreraErakutsi();
     }
 
-    @FXML
-    public void onClickItxi(ActionEvent actionEvent){
+    public void onClickRanking(ActionEvent actionEvent) {
+        mainApp.stageTxikiaClose();
+        mainApp.irabazleJokOrdErakutsi(denbora,modua);
+    }
+
+    public void onClickItxi(ActionEvent actionEvent) {
         mainApp.stageTxikiaClose();
         mainApp.close();
     }
 
-    @FXML
-    public void onClickBerrabiarazi(ActionEvent actionEvent){
+    public void onClickBerrabiarazi(ActionEvent actionEvent) {
         mainApp.stageTxikiaClose();
         mainApp.mainErakutsi(this.modua);
     }
 
-    @FXML
-    public void onClickJokvsJok(ActionEvent actionEvent){
+    public void onClickJokvsJok(ActionEvent actionEvent) {
         mainApp.stageTxikiaClose();
         mainApp.mainErakutsi(0);
     }
 
-    @FXML
-    public void onClickJokvsOrd(ActionEvent actionEvent){
+    public void onClickJokvsOrd(ActionEvent actionEvent) {
         mainApp.stageTxikiaClose();
         mainApp.mainErakutsi(1);
     }
 
-    @FXML
-    public void onClickJokvsOrdAdimendua(ActionEvent actionEvent){
+    public void onClickJokvsOrdAdimendua(ActionEvent actionEvent) {
         mainApp.stageTxikiaClose();
         mainApp.mainErakutsi(2);
     }
-
 }

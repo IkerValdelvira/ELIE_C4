@@ -12,13 +12,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="247.0" prefWidth="442.0" styleClass="background" stylesheets="@styles/bootstrap3.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.pk.controller.ui.AmaieraJokJokKud">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="247.0" prefWidth="505.0" styleClass="background" stylesheets="@styles/bootstrap3.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.pk.controller.ui.AmaieraKud">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="Aukerak">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#onClickBerrabiarazi" text="Partida berrabiarazi" />
+         <menus>
+            <Menu mnemonicParsing="false" text="Aukerak">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onClickBerrabiarazi" text="Partida berrabiarazi" />
                   <Menu mnemonicParsing="false" text="Joko modua aldatu...">
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#onClickJokvsJok" text="Jokalari vs Jokalari" />
@@ -28,14 +28,14 @@
                   </Menu>
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#onClickItxi" text="Itxi" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Laguntza">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Conecta4 buruz..." />
-            </items>
-          </Menu>
-        </menus>
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Laguntza">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Conecta4 buruz..." />
+               </items>
+            </Menu>
+         </menus>
       </MenuBar>
    </top>
    <center>
@@ -46,10 +46,11 @@
                   <Font name="Chilanka Regular" size="24.0" />
                </font>
             </Label>
-            <HBox fx:id="hbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-               </children></HBox>
+                  <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
          </children>
       </VBox>
    </center>
@@ -57,8 +58,9 @@
       <HBox fx:id="hbox" alignment="CENTER" prefHeight="45.0" prefWidth="599.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnItzuli" mnemonicParsing="false" onAction="#onClickItzuli" prefHeight="26.0" prefWidth="170.0" text="Leiho nagusira itzuli" />
-            <Button fx:id="btnErrebantxa" mnemonicParsing="false" onAction="#onClickErrebantxa" prefHeight="26.0" prefWidth="170.0" text="Errebantxa" />
+            <Button fx:id="btnErrebantxa" mnemonicParsing="false" onAction="#onClickErrebantxa" prefHeight="26.0" prefWidth="132.0" text="Errebantxa" />
+            <Button fx:id="buttonRanking" mnemonicParsing="false" onAction="#onClickRanking" prefWidth="143.0" text="Ranking-a ikusi" />
          </children>
       </HBox>
    </bottom>
-   </BorderPane>
+</BorderPane>

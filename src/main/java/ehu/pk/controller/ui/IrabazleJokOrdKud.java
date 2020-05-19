@@ -1,6 +1,7 @@
 package ehu.pk.controller.ui;
 
 import ehu.pk.Main;
+import ehu.pk.controller.db.RankingIntelligentIADBKud;
 import ehu.pk.controller.db.RankingRandomIADBKud;
 import ehu.pk.model.Emaitza;
 import javafx.collections.FXCollections;
@@ -13,6 +14,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -52,29 +55,43 @@ public class IrabazleJokOrdKud implements Initializable {
     @FXML
     private TableColumn<Emaitza, Date> colData;
 
+    @FXML
+    private VBox vbox;
+
+    @FXML
+    private HBox hbox;
+
     private ObservableList<Emaitza> emaitzaModels = FXCollections.observableArrayList();
 
     private int posizioa;
     private long denbora;
+    private int jokoModua;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        vbox.setStyle("-fx-background-color: rgba(217,217,217,0.64);");
+        hbox.setStyle("-fx-background-color: rgba(217,217,217,0.64);");
     }
 
     public void setMainApp(Main main) {
         this.mainApp = main;
     }
 
-    public void hasieratu(long denbora){
+    public void hasieratu(long denbora, int jokoModua){
         lblDenbora.setStyle("-fx-font-weight: bold;");
 
+        this.jokoModua = jokoModua;
         this.denbora = denbora;
         SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss.SSS");
         String denboraString = dateFormat.format(denbora);
         lblDenbora.setText(denboraString);
 
-        emaitzaModels = RankingRandomIADBKud.getInstantzia().rankingLortu();
+        if(jokoModua == 1){
+            emaitzaModels = RankingRandomIADBKud.getInstantzia().rankingLortu();
+        }
+        else{
+            emaitzaModels = RankingIntelligentIADBKud.getInstantzia().rankingLortu();
+        }
         posizioa = -1;
         for(int i=0; i<emaitzaModels.size(); i++){
             if(denbora < emaitzaModels.get(i).getDenbora()){
@@ -84,12 +101,12 @@ public class IrabazleJokOrdKud implements Initializable {
         }
         if(posizioa == -1 && emaitzaModels.size() < 10){
             posizioa = emaitzaModels.size()+1;
-            lblMezua.setText("10 jokalari onenen " + (posizioa) + " posizioan ranking-ean sar zaitezke!!! Izena eman:");
+            lblMezua.setText("10 jokalari onenen " + (posizioa) + " posizioan ranking-ean sar zaitezke!!!    Izena eman:");
             tfIzenaSartu.setVisible(true);
             btnIzenaGorde.setVisible(true);
         }
         else if(posizioa != -1){
-            lblMezua.setText("10 jokalari onenen " + (posizioa) + " posizioan ranking-ean sar zaitezke!!! Izena eman:");
+            lblMezua.setText("10 jokalari onenen " + (posizioa) + " posizioan ranking-ean sar zaitezke!!!    Izena eman:");
             tfIzenaSartu.setVisible(true);
             btnIzenaGorde.setVisible(true);
         }
@@ -99,7 +116,6 @@ public class IrabazleJokOrdKud implements Initializable {
             btnIzenaGorde.setVisible(false);
         }
 
-        //colPosizioa.setCellValueFactory(new PropertyValueFactory<>("Posizioa"));
         colJokalaria.setCellValueFactory(new PropertyValueFactory<>("Jokalaria"));
         colDenbora.setCellValueFactory(new PropertyValueFactory<>("DenboraString"));
         colData.setCellValueFactory(new PropertyValueFactory<>("Data"));
@@ -129,8 +145,14 @@ public class IrabazleJokOrdKud implements Initializable {
     @FXML
     public void onClickIzenaGorde(ActionEvent actionEvent){
         Emaitza emaitza = new Emaitza(posizioa,tfIzenaSartu.getText(),denbora,new Timestamp(new Date().getTime()).toString());
+        // Ranking-a ez dago beteta eta uneko emaitza libre dagoen azken posizioan kokatzen da
         if(posizioa == emaitzaModels.size()+1 && emaitzaModels.size() < 10){
-            RankingRandomIADBKud.getInstantzia().emaitzaSartu(emaitza);
+            if(jokoModua == 1){
+                RankingRandomIADBKud.getInstantzia().emaitzaSartu(emaitza);
+            }
+            else{
+                RankingIntelligentIADBKud.getInstantzia().emaitzaSartu(emaitza);
+            }
             emaitzaModels.add(emaitza);
         }
         else{
@@ -139,12 +161,14 @@ public class IrabazleJokOrdKud implements Initializable {
                 emaitzaModelsLag.add(emaitzaModels.get(i-1));
             }
             emaitzaModelsLag.add(emaitza);
+            // Ranking-a ez dago beteta eta uneko emaitza azkena ez den posizio batean kokatzen da
             if(emaitzaModels.size()<10){
                 for(int i=emaitzaModelsLag.size(); i<=emaitzaModels.size(); i++) {
                     emaitzaModels.get(i-1).setPosizioa(emaitzaModels.get(i-1).getPosizioa()+1);
                     emaitzaModelsLag.add(emaitzaModels.get(i-1));
                 }
             }
+            // Ranking-a beteta dago
             else{
                 for(int i=emaitzaModelsLag.size(); i<10; i++) {
                     emaitzaModels.get(i-1).setPosizioa(emaitzaModels.get(i-1).getPosizioa()+1);
@@ -153,8 +177,14 @@ public class IrabazleJokOrdKud implements Initializable {
             }
             emaitzaModels.clear();
             emaitzaModels.addAll(emaitzaModelsLag);
-            RankingRandomIADBKud.getInstantzia().emaitzakEzabatu();
-            RankingRandomIADBKud.getInstantzia().emaitzakSartu(emaitzaModels);
+            if(jokoModua == 1){
+                RankingRandomIADBKud.getInstantzia().emaitzakEzabatu();
+                RankingRandomIADBKud.getInstantzia().emaitzakSartu(emaitzaModels);
+            }
+            else{
+                RankingIntelligentIADBKud.getInstantzia().emaitzakEzabatu();
+                RankingIntelligentIADBKud.getInstantzia().emaitzakSartu(emaitzaModels);
+            }
             tfIzenaSartu.setVisible(false);
             btnIzenaGorde.setVisible(false);
             lblMezua.setText("Zure izena ranking-ean erregistratu da!!!");
@@ -164,13 +194,43 @@ public class IrabazleJokOrdKud implements Initializable {
     @FXML
     public void onClickErrebantxa(ActionEvent actionEvent){
         mainApp.stageTxikiaClose();
-        mainApp.mainErakutsi(1);
+        mainApp.mainErakutsi(jokoModua);
     }
 
     @FXML
     public void onClickItzuli(ActionEvent actionEvent){
         mainApp.stageTxikiaClose();
         mainApp.sarreraErakutsi();
+    }
+
+    @FXML
+    public void onClickItxi(ActionEvent actionEvent){
+        mainApp.close();
+        mainApp.stageTxikiaClose();
+    }
+
+    @FXML
+    public void onClickBerrabiarazi(ActionEvent actionEvent){
+        mainApp.mainErakutsi(this.jokoModua);
+        mainApp.stageTxikiaClose();
+    }
+
+    @FXML
+    public void onClickJokvsJok(ActionEvent actionEvent){
+        mainApp.mainErakutsi(0);
+        mainApp.stageTxikiaClose();
+    }
+
+    @FXML
+    public void onClickJokvsOrd(ActionEvent actionEvent){
+        mainApp.mainErakutsi(1);
+        mainApp.stageTxikiaClose();
+    }
+
+    @FXML
+    public void onClickJokvsOrdAdimendua(ActionEvent actionEvent){
+        mainApp.mainErakutsi(2);
+        mainApp.stageTxikiaClose();
     }
 
 }

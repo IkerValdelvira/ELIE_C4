@@ -10,7 +10,9 @@ import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,8 +23,8 @@ public class Main extends Application {
   private Parent sarreraUI;
   private Parent amaieraJokJokUI;
   private Parent irabazleJokOrdUI;
-  private Parent galtzaileJokOrdUI;
   private Parent berdinketaUI;
+  private Parent amaieraUI;
 
   private Stage stage;
   private Stage stageTxikia;
@@ -31,15 +33,15 @@ public class Main extends Application {
   private SarreraKud sarreraKud;
   private AmaieraJokJokKud amaieraJokJokKud;
   private IrabazleJokOrdKud irabazleJokOrdKud;
-  private GaltzaileJokOrdKud galtzaileJokOrdKud;
   private BerdinketaKud berdinketaKud;
+  private AmaieraKud amaieraKud;
 
   private Scene mainScene;
   private Scene sarreraScene;
   private Scene amaieraJokJokScene;
   private Scene irabazleJokOrdScene;
-  private Scene galtzaileJokOrdScene;
   private Scene berdinketaScene;
+  private Scene amaieraScene;
 
 
   @Override
@@ -71,10 +73,11 @@ public class Main extends Application {
       directory.mkdir();
       try {
         source = Paths.get(getClass().getClassLoader().getResource("conecta4DB.sqlite").toURI());
+        //source = Paths.get(new File("conecta4DB.sqlite").toURI());
         destination = Paths.get(path);
         Files.copy(source, destination);
 
-      } catch (URISyntaxException | IOException e) {
+      } catch (IOException | URISyntaxException e) {
         e.printStackTrace();
       }
     }
@@ -102,15 +105,15 @@ public class Main extends Application {
     amaieraJokJokKud = loaderAmaieraJokJok.getController();
     amaieraJokJokKud.setMainApp(this);
 
-    FXMLLoader loaderGaltzaileJokOrd = new FXMLLoader(getClass().getResource("/galtzaileJokOrd.fxml"));
-    galtzaileJokOrdUI = (Parent) loaderGaltzaileJokOrd.load();
-    galtzaileJokOrdKud = loaderGaltzaileJokOrd.getController();
-    galtzaileJokOrdKud.setMainApp(this);
-
     FXMLLoader loaderBerdinketa = new FXMLLoader(getClass().getResource("/berdinketa.fxml"));
     berdinketaUI = (Parent) loaderBerdinketa.load();
     berdinketaKud = loaderBerdinketa.getController();
     berdinketaKud.setMainApp(this);
+
+    FXMLLoader loaderAmaiera = new FXMLLoader(getClass().getResource("/amaiera.fxml"));
+    amaieraUI = (Parent) loaderAmaiera.load();
+    amaieraKud = loaderAmaiera.getController();
+    amaieraKud.setMainApp(this);
 
   }
 
@@ -132,7 +135,7 @@ public class Main extends Application {
 
   public void amaieraJokJokErakutsi(String pIrabazlea){
     if(amaieraJokJokScene == null){
-      amaieraJokJokScene = new Scene(amaieraJokJokUI, 500, 250);
+      amaieraJokJokScene = new Scene(amaieraJokJokUI, 500, 270);
     }
     stageTxikia.setScene(amaieraJokJokScene);
     stageTxikia.setTitle("IRABAZLEA");
@@ -140,33 +143,38 @@ public class Main extends Application {
     stageTxikia.show();
   }
 
-  public void irabazleJokOrdErakutsi(long denbora){
+  public void irabazleJokOrdErakutsi(long denbora, int jokoModua){
     if(irabazleJokOrdScene == null){
-      irabazleJokOrdScene = new Scene(irabazleJokOrdUI, 820, 510);
+      irabazleJokOrdScene = new Scene(irabazleJokOrdUI, 820, 505);
     }
+
     stageTxikia.setScene(irabazleJokOrdScene);
     stageTxikia.setTitle("IRABAZLEA");
     stageTxikia.show();
-    irabazleJokOrdKud.hasieratu(denbora);
-  }
-
-  public void galtzaileJokOrdErakutsi(){
-    if(galtzaileJokOrdScene == null){
-      galtzaileJokOrdScene = new Scene(galtzaileJokOrdUI, 500, 250);
-    }
-    stageTxikia.setScene(galtzaileJokOrdScene);
-    stageTxikia.setTitle("GAME OVER");
-    stageTxikia.show();
+    irabazleJokOrdKud.hasieratu(denbora, jokoModua);
   }
 
   public void berdiketaErakutsi(int pModua){
     if(berdinketaScene == null){
-      berdinketaScene = new Scene(berdinketaUI, 500, 250);
+      berdinketaScene = new Scene(berdinketaUI, 500, 260);
     }
     stageTxikia.setScene(berdinketaScene);
     stageTxikia.setTitle("BERDINKETA");
     stageTxikia.show();
     berdinketaKud.setModua(pModua);
+  }
+  public void amaieraErakutsi(String emaitza, long denbora, int modua){
+    if(amaieraScene == null) {
+      amaieraScene = new Scene(amaieraUI, 500, 270);
+    }
+
+    stageTxikia.setScene(amaieraScene);
+    stageTxikia.show();
+    amaieraKud.hasieratu(emaitza,denbora,modua);
+  }
+
+  public void close(){
+    stage.close();
   }
 
   public void stageTxikiaClose(){

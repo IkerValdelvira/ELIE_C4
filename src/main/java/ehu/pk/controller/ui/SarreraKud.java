@@ -1,27 +1,28 @@
 package ehu.pk.controller.ui;
 
 import ehu.pk.Main;
-import ehu.pk.controller.IntelligentIA;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
-import java.awt.*;
 import java.net.URL;
-import java.util.Random;
+import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 public class SarreraKud implements Initializable {
 
     private Main mainApp;
+
+    @FXML
+    private ImageView ivLogoa;
 
     @FXML
     private ComboBox<String> cbModua;
@@ -29,9 +30,20 @@ public class SarreraKud implements Initializable {
     @FXML
     private Button btnHasi;
 
+    @FXML
+    private HBox hbox;
+
+    @FXML
+    private VBox vbox;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        hbox.setStyle("-fx-background-color: rgba(217,217,217,0.64);");
+        vbox.setStyle("-fx-background-color: rgba(217,217,217,0.64);");
+        ivLogoa.setFitHeight(125);
+        ivLogoa.setFitWidth(250);
+        ivLogoa.setImage(new Image("pictures/conecta4.png"));
         cbModua.getItems().addAll("Jokalari VS Jokalari", "Jokalari VS Ordenagailu", "Jokalari VS Ordenagailu Adimendua");
         cbModua.getSelectionModel().selectFirst();
     }
@@ -52,6 +64,11 @@ public class SarreraKud implements Initializable {
         else{
             mainApp.mainErakutsi(2);
         }
+    }
+
+    @FXML
+    public void onClickItxi(ActionEvent actionEvent){
+        mainApp.close();
     }
 
 }

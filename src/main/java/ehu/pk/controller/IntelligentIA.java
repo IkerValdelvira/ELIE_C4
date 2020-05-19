@@ -44,30 +44,33 @@ public class IntelligentIA {
 
     private static Double maxValue(Tableroa tableroa, int depth) {
         Double v = Double.NEGATIVE_INFINITY;
+        /*
         Boolean isLose = tableroa.irabaziDuJokalariak("G");  // Tableroa egoera honetan ea norbaitek galdu duen
         Boolean isWin = tableroa.irabaziDuJokalariak("IA");;  // Tableroa egoera honetan ea norbaitek irabazi duen
         if (globalDepth == depth || isLose == true || isWin == true)
             return evaluationFunction(tableroa);
         else {
+         */
             ArrayList<Point> aukeraPosibleGuztiak = emanAukeraGuztiak(tableroa);
             for (Point aukera: aukeraPosibleGuztiak)
                 v = Double.max(v, minValue(generateSuccessor(aukera, tableroa), depth));
-        }
+        //}
         return v;
     }
 
     private static Double evaluationFunction(Tableroa tableroa) {
 
+        /*
         if(tableroa.irabaziDuJokalariak("IA"))
             return Double.MAX_VALUE;
         else if (tableroa.irabaziDuJokalariak("G"))
             return Double.MIN_VALUE;
         else {
+         */
             Double emaitza = null;
 
-
             return emaitza;
-        }
+        //}
     }
 
     private static Tableroa generateSuccessor(Point aukera, Tableroa tableroa) {
@@ -106,8 +109,8 @@ public class IntelligentIA {
             if (tableroa.irabaziDu(erren,zut, "IA"))
                 irabazi = new Point(erren,zut);
 
-            if (tableroa.albokorenBatDauka(erren,zut,"IA"))
-                alboko = new Point(erren,zut);
+//            if (tableroa.albokorenBatDauka(erren,zut,"IA"))
+//                alboko = new Point(erren,zut);
             tableroa.setFitxa(erren,zut,"Z");
         }
 

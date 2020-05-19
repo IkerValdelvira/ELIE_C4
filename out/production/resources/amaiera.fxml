@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="247.0" prefWidth="505.0" styleClass="background" stylesheets="@styles/bootstrap3.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.pk.controller.ui.AmaieraKud">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+         <menus>
+            <Menu mnemonicParsing="false" text="Aukerak">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onClickBerrabiarazi" text="Partida berrabiarazi" />
+                  <Menu mnemonicParsing="false" text="Joko modua aldatu...">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#onClickJokvsJok" text="Jokalari vs Jokalari" />
+                        <MenuItem mnemonicParsing="false" onAction="#onClickJokvsOrd" text="Jokalari vs Ordenagailu" />
+                        <MenuItem mnemonicParsing="false" onAction="#onClickJokvsOrdAdimendua" text="Jokalari vs Ordenagailu Adimendua" />
+                    </items>
+                  </Menu>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#onClickItxi" text="Itxi" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Laguntza">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Conecta4 buruz..." />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <VBox fx:id="vbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="lblIrabazlea">
+               <font>
+                  <Font name="Chilanka Regular" size="24.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox fx:id="hbox" alignment="CENTER" prefHeight="45.0" prefWidth="599.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnItzuli" mnemonicParsing="false" onAction="#onClickItzuli" prefHeight="26.0" prefWidth="170.0" text="Leiho nagusira itzuli" />
+            <Button fx:id="btnErrebantxa" mnemonicParsing="false" onAction="#onClickErrebantxa" prefHeight="26.0" prefWidth="132.0" text="Errebantxa" />
+            <Button fx:id="buttonRanking" mnemonicParsing="false" onAction="#onClickRanking" prefWidth="143.0" text="Ranking-a ikusi" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

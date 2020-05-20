@@ -185,10 +185,10 @@ public class IrabazleJokOrdKud implements Initializable {
                 RankingIntelligentIADBKud.getInstantzia().emaitzakEzabatu();
                 RankingIntelligentIADBKud.getInstantzia().emaitzakSartu(emaitzaModels);
             }
-            tfIzenaSartu.setVisible(false);
-            btnIzenaGorde.setVisible(false);
-            lblMezua.setText("Zure izena ranking-ean erregistratu da!!!");
         }
+        tfIzenaSartu.setVisible(false);
+        btnIzenaGorde.setVisible(false);
+        lblMezua.setText("Zure izena ranking-ean erregistratu da!!!");
     }
 
     @FXML

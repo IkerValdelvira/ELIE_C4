@@ -13,8 +13,7 @@ public class IntelligentIA {
         // Sartu ahal diren kasilla guztiak lortu
         for (int zut = 0; zut < tableroa.getZutabeKop(); zut++) {
             int erren = tableroa.kokapenErrenkadaBilatu(zut);
-            if (erren != 0)
-                emaitza.add(new Point(erren,zut));
+            emaitza.add(new Point(erren,zut));
         }
         return emaitza;
     }
